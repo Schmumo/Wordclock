@@ -1061,7 +1061,9 @@ def pacman(l, c):
     while finished == False:
         #Neue Richtung setzen, falls erlaubte Änderung
         curDir = newPDirection
-
+        oldX = xPacman
+        oldY = yPacman
+    
         #Neue Position von Pacman berechnen
         if curDir == "w":
             xPacman = max(xPacman - 1, 0)
@@ -1078,8 +1080,15 @@ def pacman(l, c):
             pills.remove(pacman)
             counter = counter + 1
 
-        #Geister Bewegung berechnen
+        if pacman in powers:
+            powers.remove(pacman)
+            supermode = True
 
+
+        #Geister Bewegung berechnen
+        for i in range(len(ghosts)):
+            ghosts[i].movement(oldX, oldY)
+        
         #Kollision mit Geistern prüfen
         for i in range(len(ghosts)):
             if pacman == ghosts[i].getPosition():

@@ -14,3 +14,29 @@ class Ghost:
 
     def getPosition(self):
         return Ghost.matrix[self.x][self.y]
+
+    def movement(self, xPacman, yPacman):
+        deltaX = xPacman - self.x
+        deltaY = yPacman - self.y
+        if deltaX >= deltaY:
+            if xPacman > self.x:
+                self.moveDown()
+            else:
+                self.moveUp()
+        else:
+            if yPacman > self.y:
+                self.moveRight()
+            else:
+                self.moveLeft()
+
+    def moveUp(self):
+        self.x = max(self.x - 1, 0)
+
+    def moveDown(self):
+        self.x = min(self.x + 1, 9)
+
+    def moveRight(self):
+        self.y = min(self.y + 1, 10)
+
+    def moveLeft(self):
+        self.y = max(self.y - 1, 0)
