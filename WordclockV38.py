@@ -1023,8 +1023,9 @@ def pacman(l, c):
     global newPDirection
     GHOSTCOLOR = Color(0,255,0)
     PACMANCOLOR = Color(200,255,0)
-    PILLCOLOR = Color(30,30,0)
+    PILLCOLOR = Color(20,20,0)
     POWERCOLOR = Color(255,0,255)
+    timeCounter = 0
     busy = True
     print("Start Pacman.")
     counter = c
@@ -1106,6 +1107,7 @@ def pacman(l, c):
         for i in range(len(ghosts)):
             strip.setPixelColor(ghosts[i].getPosition(), GHOSTCOLOR)
         strip.show()
+        timeCounter = timeCounter + 1
         time.sleep(sleepTime)
 
     #Ende. Tasten deaktivieren, Punktzahl anzeigen.
