@@ -1043,10 +1043,10 @@ def pacman(l, c):
     for i in range(len(pills)):
         strip.setPixelColor(pills[i], PILLCOLOR)
     strip.setPixelColor(matrix[xPacman][yPacman], PACMANCOLOR)
-    for i in range(len(ghosts)):
-        strip.setPixelColor(ghosts[i].getPosition(), GHOSTCOLOR)
     for i in range(len(powers)):
         strip.setPixelColor(powers[i], POWERCOLOR)
+    for i in range(len(ghosts)):
+        strip.setPixelColor(ghosts[i].getPosition(), GHOSTCOLOR)
     strip.show()
     time.sleep(2)
     curDir = random.choice(["w", "a", "s", "d"])
@@ -1099,10 +1099,10 @@ def pacman(l, c):
         for i in range(len(pills)):
             strip.setPixelColor(pills[i], PILLCOLOR)
         strip.setPixelColor(matrix[xPacman][yPacman], PACMANCOLOR)
-        for i in range(len(ghosts)):
-            strip.setPixelColor(ghosts[i].getPosition(), GHOSTCOLOR)
         for i in range(len(powers)):
             strip.setPixelColor(powers[i], POWERCOLOR)
+        for i in range(len(ghosts)):
+            strip.setPixelColor(ghosts[i].getPosition(), GHOSTCOLOR)
         strip.show()
         time.sleep(sleepTime)
 

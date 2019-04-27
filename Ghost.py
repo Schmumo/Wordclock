@@ -18,7 +18,7 @@ class Ghost:
     def movement(self, xPacman, yPacman):
         deltaX = xPacman - self.x
         deltaY = yPacman - self.y
-        if deltaX >= deltaY:
+        if deltaX < deltaY:
             if xPacman > self.x:
                 self.moveDown()
             else:
