@@ -1020,41 +1020,32 @@ def pacman(l, c):
     global COLOR
     global COLORCOPY
     global newPDirection
+    GHOSTCOLOR = Color(0,255,0)
+    PACMANCOLOR = Color(200,255,0)
+    PILLCOLOR = Color(30,30,0)
+    POWERCOLOR = Color(255,0,255)
     busy = True
     print("Start Pacman.")
     counter = c
     level = l
-    sleepTime = 0.3
+    sleepTime = 0.2
     xPacman = random.randint(0, 9)
     yPacman = random.randint(0, 10)
-    xEnemy1 = random.randint(0, 9)
-    yEnemy1 = random.randint(0, 10)
-    xEnemy2 = random.randint(0, 9)
-    yEnemy2 = random.randint(0, 10)
-    xEnemy3 = random.randint(0, 9)
-    yEnemy3 = random.randint(0, 10)
-    xEnemy4 = random.randint(0, 9)
-    yEnemy4 = random.randint(0, 10)
+    ghosts = []
+    for i in range(4):
+        ghosts.append(Ghost(level))
     pills = []
-    for i in range(2,111):
+    for i in range(2,112):
         pills.append(i)
-    pacman = matrix[xPacman][yPacman]
-    enemy1 = matrix[xEnemy1][yEnemy1]
-    enemy2 = matrix[xEnemy2][yEnemy2]
-    enemy3 = matrix[xEnemy3][yEnemy3]
-    enemy4 = matrix[xEnemy4][yEnemy4]
-    power1 = 12
-    power2 = 2
-    power3 = 101
-    power4 = 111
+    powers = [2, 12, 101, 111}
     clear(strip)
     for i in range(len(pills)):
-        strip.setPixelColor(pills[i], Color(255,255,255))
-    strip.setPixelColor(pacman, Color(200,255,0))
-    strip.setPixelColor(enemy1, Color(0,255,0))
-    strip.setPixelColor(enemy2, Color(255,0,0))
-    strip.setPixelColor(enemy3, Color(60,0,255))
-    strip.setPixelColor(enemy4, Color(50,255,0))
+        strip.setPixelColor(pills[i], PILLCOLOR)
+    strip.setPixelColor(matrix[xPacman][yPacman], PACMANCOLOR)
+    for i in range(len(ghosts)):
+        strip.setPixelColor(ghosts[i].getPosition(), GHOSTCOLOR)
+    for i in range(len(powers)):
+        strip.setPixelColor(powers[i], POWERCOLOR)
     strip.show()
     time.sleep(2)
     curDir = random.choice(["w", "a", "s", "d"])
@@ -1089,18 +1080,19 @@ def pacman(l, c):
         #Geister Bewegung berechnen
 
         #Kollision mit Geistern prüfen
-        if pacman == enemy1 or pacman == enemy2 or pacman == enemy3 or pacman == enemy4:
-            finished = True
+        for i in range(len(ghosts)):
+            if pacman == ghosts[i].getPosition():
+                finished = True
         
         #Spielfeld anzeigen und Sleep
         clear(strip)
         for i in range(len(pills)):
-            strip.setPixelColor(pills[i], Color(30,30,0))
-        strip.setPixelColor(pacman, Color(200,255,0))
-        strip.setPixelColor(enemy1, Color(0,255,0))
-        strip.setPixelColor(enemy2, Color(0,255,0))
-        strip.setPixelColor(enemy3, Color(0,255,0))
-        strip.setPixelColor(enemy4, Color(0,255,0))
+            strip.setPixelColor(pills[i], PILLCOLOR)
+        strip.setPixelColor(matrix[xPacman][yPacman], PACMANCOLOR)
+        for i in range(len(ghosts)):
+            strip.setPixelColor(ghosts[i].getPosition(), GHOSTCOLOR)
+        for i in range(len(powers)):
+            strip.setPixelColor(powers[i], POWERCOLOR)
         strip.show()
         time.sleep(sleepTime)
 
