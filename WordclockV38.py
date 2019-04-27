@@ -28,6 +28,7 @@ import copy
 import random
 import ConfigParser
 from TetrisClass import *
+from Ghost import *
 #from TetrisClass import QBlock
 
 LED_COUNT = 114
@@ -506,7 +507,7 @@ def showInput():
         werder()
         input_text.delete(0,END)
     elif (input_text.get().startswith("#pacman")):
-        pacman()
+        showPacman()
         input_text.delete(0,END)
     else:
         thread.start_new_thread(showInput2, ())
@@ -772,7 +773,7 @@ def smiley():
     turnOnLEDs(strip, arrayLEDs)
     
 #Zeigt Pacman auf der Uhr an
-def pacman():
+def showPacman():
     clear(strip)
     arrayX = [0,0,0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,8,8]
     arrayY = [3,4,5,6,2,7,1,8,0,7,0,6,0,7,1,8,2,7,3,4,5,6]
@@ -1037,7 +1038,7 @@ def pacman(l, c):
     pills = []
     for i in range(2,112):
         pills.append(i)
-    powers = [2, 12, 101, 111}
+    powers = [2, 12, 101, 111]
     clear(strip)
     for i in range(len(pills)):
         strip.setPixelColor(pills[i], PILLCOLOR)

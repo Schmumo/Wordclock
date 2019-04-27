@@ -13,4 +13,4 @@ class Ghost:
         self.y = random.randint(0, 10)
 
     def getPosition(self):
-        return matrix[self.x][self.y]
+        return Ghost.matrix[self.x][self.y]
