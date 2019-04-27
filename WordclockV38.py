@@ -974,7 +974,7 @@ def snake():
         turnOnLEDs(strip, trophy)
         time.sleep(5)
         config.set('sonstiges_section', 'highscore', counter)
-        with open('/home/pi/Schreibtisch/Python/WordClock/wordclock_cfg.cfg', 'wb') as configfile:
+        with open('/home/pi/Schreibtisch/Python/Git/wordclock_cfg.cfg', 'wb') as configfile:
             config.write(configfile)
 
     score = str(counter)
@@ -1120,7 +1120,7 @@ def pacman(l, c):
         turnOnLEDs(strip, trophy)
         time.sleep(5)
         config.set('sonstiges_section', 'pacmanscore', counter)
-        with open('/home/pi/Schreibtisch/Python/WordClock/wordclock_cfg.cfg', 'wb') as configfile:
+        with open('/home/pi/Schreibtisch/Python/Git/wordclock_cfg.cfg', 'wb') as configfile:
             config.write(configfile)
 
     score = str(counter)
@@ -1268,7 +1268,7 @@ def tetris():
         turnOnLEDs(strip, trophy)
         time.sleep(5)
         config.set('sonstiges_section', 'tetrisscore', counter)
-        with open('/home/pi/Schreibtisch/Python/WordClock/wordclock_cfg.cfg', 'wb') as configfile:
+        with open('/home/pi/Schreibtisch/Python/Git/wordclock_cfg.cfg', 'wb') as configfile:
             config.write(configfile)
     score = str(counter)
     scoreShow = " " + score
@@ -1526,7 +1526,7 @@ def spaceInvaders():
         turnOnLEDs(strip, trophy)
         time.sleep(5)
         config.set('sonstiges_section', 'spacescore', counter)
-        with open('/home/pi/Schreibtisch/Python/WordClock/wordclock_cfg.cfg', 'wb') as configfile:
+        with open('/home/pi/Schreibtisch/Python/Git/wordclock_cfg.cfg', 'wb') as configfile:
             config.write(configfile)
     score = str(counter)
     scoreShow = " " + score
@@ -1827,7 +1827,7 @@ def saveConfig():
     config.set('nachtfarbe_section', 'rot', (NIGHTCOLOR & BITMASK_RED) >> 8)
     config.set('nachtfarbe_section', 'blau', (NIGHTCOLOR & BITMASK_BLUE))
 
-    with open('/home/pi/Schreibtisch/Python/WordClock/wordclock_cfg.cfg', 'wb') as configfile:
+    with open('/home/pi/Schreibtisch/Python/Git/wordclock_cfg.cfg', 'wb') as configfile:
         config.write(configfile)
 
 #Setzt die Einstellungen auf Standard zurück
@@ -1850,7 +1850,7 @@ def resetConfig():
     config.set('nachtfarbe_section', 'rot', 50)
     config.set('nachtfarbe_section', 'blau', 0)
 
-    with open('/home/pi/Schreibtisch/Python/WordClock/wordclock_cfg.cfg', 'wb') as configfile:
+    with open('/home/pi/Schreibtisch/Python/Git/wordclock_cfg.cfg', 'wb') as configfile:
         config.write(configfile)
 
 #Zeigt die aktuell in der .cfg-Datei gespeicherten Einstellungen an
@@ -1865,7 +1865,7 @@ def showConfig():
 
 #Zeigt das Impressum an
 def about():
-    info_text= "**************\nAuthor: Marc Jenne\nVersion: 3.7\n**************"
+    info_text= "**************\nAuthor: Marc Jenne\nVersion: 3.8\n**************"
     tkMessageBox.showinfo(message=info_text, title="About")
 
 #Diese und die folgenden Funktionen zeigen die verschiedenen Hilfefenster an
@@ -1992,7 +1992,7 @@ master.geometry("+90+100")
 master.title("Wordclock")
 GPIO.setmode(GPIO.BCM)
 config = ConfigParser.RawConfigParser()
-config.read('/home/pi/Schreibtisch/Python/WordClock/wordclock_cfg.cfg')
+config.read('/home/pi/Schreibtisch/Python/Git/wordclock_cfg.cfg')
 preset = preset()
 
 #BUILD FRAME
