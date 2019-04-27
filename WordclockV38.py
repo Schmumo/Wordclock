@@ -1090,7 +1090,7 @@ def pacman(l, c):
         if timeCounter == 2:
             for i in range(len(ghosts)):
                 ghosts[i].movement(oldX, oldY)
-            timeCounter == 0
+            timeCounter = 0
         
         #Kollision mit Geistern prüfen
         for i in range(len(ghosts)):
@@ -1108,6 +1108,7 @@ def pacman(l, c):
             strip.setPixelColor(ghosts[i].getPosition(), GHOSTCOLOR)
         strip.show()
         timeCounter = timeCounter + 1
+        print(timeCounter)
         time.sleep(sleepTime)
 
     #Ende. Tasten deaktivieren, Punktzahl anzeigen.
