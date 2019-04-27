@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=Wordclock
+Comment=
+Icon=/home/pi/Schreibtisch/Python/Git/Icon.jpg
+Exec=lxterminal -e sudo python /home/pi/Schreibtisch/Python/Git/WordclockV38.py
+StartupNotify=false
+Terminal=true
+Hidden=false
