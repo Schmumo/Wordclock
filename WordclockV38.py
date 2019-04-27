@@ -1024,7 +1024,7 @@ def pacman(l, c):
     print("Start Pacman.")
     counter = c
     level = l
-    sleepTime = 0.5
+    sleepTime = 0.3
     xPacman = random.randint(0, 9)
     yPacman = random.randint(0, 10)
     xEnemy1 = random.randint(0, 9)
@@ -1068,11 +1068,7 @@ def pacman(l, c):
     #Hauptschleife
     while finished == False:
         #Neue Richtung setzen, falls erlaubte Änderung
-        newDir = newPDirection
-        if newDir == "w" and curDir != "s": curDir = "w"
-        elif newDir == "s" and curDir != "w": curDir = "s"
-        elif newDir == "d" and curDir != "a": curDir = "d"
-        elif newDir == "a" and curDir != "d": curDir = "a"
+        curDir = newPDirection
 
         #Neue Position von Pacman berechnen
         if curDir == "w":
@@ -1099,12 +1095,12 @@ def pacman(l, c):
         #Spielfeld anzeigen und Sleep
         clear(strip)
         for i in range(len(pills)):
-            strip.setPixelColor(pills[i], Color(255,255,255))
+            strip.setPixelColor(pills[i], Color(30,30,0))
         strip.setPixelColor(pacman, Color(200,255,0))
         strip.setPixelColor(enemy1, Color(0,255,0))
-        strip.setPixelColor(enemy2, Color(255,0,0))
-        strip.setPixelColor(enemy3, Color(60,0,255))
-        strip.setPixelColor(enemy4, Color(50,255,0))
+        strip.setPixelColor(enemy2, Color(0,255,0))
+        strip.setPixelColor(enemy3, Color(0,255,0))
+        strip.setPixelColor(enemy4, Color(0,255,0))
         strip.show()
         time.sleep(sleepTime)
 
