@@ -1029,7 +1029,7 @@ def pacman(l, c):
     print("Start Pacman.")
     counter = c
     level = l
-    sleepTime = 0.2
+    sleepTime = 0.3
     xPacman = random.randint(0, 9)
     yPacman = random.randint(0, 10)
     ghosts = []
@@ -1086,8 +1086,10 @@ def pacman(l, c):
 
 
         #Geister Bewegung berechnen
-        for i in range(len(ghosts)):
-            ghosts[i].movement(oldX, oldY)
+        if timeCounter == 2:
+            for i in range(len(ghosts)):
+                ghosts[i].movement(oldX, oldY)
+            timeCounter == 0
         
         #Kollision mit Geistern prüfen
         for i in range(len(ghosts)):
