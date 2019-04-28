@@ -1088,6 +1088,7 @@ def pacman(l, c):
 
         #Geister Bewegung berechnen
         if timeCounter == 2:
+            #print("setze timecounter zurück")
             for i in range(len(ghosts)):
                 ghosts[i].movement(oldX, oldY)
             timeCounter = 0
@@ -1108,7 +1109,7 @@ def pacman(l, c):
             strip.setPixelColor(ghosts[i].getPosition(), GHOSTCOLOR)
         strip.show()
         timeCounter = timeCounter + 1
-        print(timeCounter)
+        #print(timeCounter)
         time.sleep(sleepTime)
 
     #Ende. Tasten deaktivieren, Punktzahl anzeigen.
