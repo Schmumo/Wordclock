@@ -13,6 +13,10 @@ class Ghost:
         self.y = random.randint(0, 10)
         self.otherGhosts = []
 
+    def newPosition(self):
+        self.x = random.randint(0, 9)
+        self.y = random.randint(0, 10)
+
     def getPosition(self):
         return Ghost.matrix[self.x][self.y]
 
@@ -21,6 +25,13 @@ class Ghost:
         for i in range(len(self.otherGhosts)):
             otherPositions.append(self.otherGhosts[i].getPosition())
         return otherPositions
+
+    def getAllPositions(self):
+        allPositions = []
+        for i in range(len(self.otherGhosts)):
+            allPositions.append(self.otherGhosts[i].getPosition())
+        allPositions.append(self.getPosition())
+        return allPositions
 
     def movement(self, xPacman, yPacman):
         if random.randint(1,2*self.level) == self.level:

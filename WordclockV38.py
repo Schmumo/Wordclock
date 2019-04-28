@@ -1013,10 +1013,10 @@ def startPacman():
     global busy
     if busy == True:
         return
-    thread.start_new_thread(pacman, (1,0))
+    thread.start_new_thread(pacman, ())
 
-#Snake
-def pacman(l, c):
+#Pacman
+def pacman():
     global busy
     global COLOR
     global COLORCOPY
@@ -1028,11 +1028,9 @@ def pacman(l, c):
     timeCounter = 0
     busy = True
     print("Start Pacman.")
-    counter = c
-    level = l
+    counter = 0
+    level = 1
     sleepTime = 0.3
-    xPacman = random.randint(0, 9)
-    yPacman = random.randint(0, 10)
     ghosts = []
     for i in range(4):
         ghosts.append(Ghost(level))
@@ -1040,6 +1038,11 @@ def pacman(l, c):
         for j in range(len(ghosts)):
             if i != j:
                 ghosts[i].otherGhosts.append(ghosts[j])
+    xPacman = random.randint(0, 9)
+    yPacman = random.randint(0, 10)
+    while matrix[xPacman][yPacman] in ghosts[i].getAllPositions():
+        xPacman = random.randint(0, 9)
+        yPacman = random.randint(0, 10)
     pills = []
     for i in range(2,112):
         pills.append(i)
@@ -1101,12 +1104,30 @@ def pacman(l, c):
         for i in range(len(ghosts)):
             if pacman == ghosts[i].getPosition():
                 finished = True
+
+        #Prüfen, ob Level vorbei und gegebenfalls neu aufbauen
+        if len(pills) == 0:
+            for i in range(len(ghosts)):
+                level = level + 1
+                ghosts[i].newPosition()
+                ghosts[i].level = level
+            pills = []
+            for i in range(2,112):
+                pills.append(i)
+            powers = [2, 12, 101, 111]
+            xPacman = random.randint(0, 9)
+            yPacman = random.randint(0, 10)
+            while matrix[xPacman][yPacman] in ghosts[i].getAllPositions():
+                xPacman = random.randint(0, 9)
+                yPacman = random.randint(0, 10)
+            pacman = matrix[xPacman][yPacman]
+            showText("level" + (str)(level))
         
         #Spielfeld anzeigen und Sleep
         clear(strip)
         for i in range(len(pills)):
             strip.setPixelColor(pills[i], PILLCOLOR)
-        strip.setPixelColor(matrix[xPacman][yPacman], PACMANCOLOR)
+        strip.setPixelColor(pacman, PACMANCOLOR)
         for i in range(len(powers)):
             strip.setPixelColor(powers[i], POWERCOLOR)
         for i in range(len(ghosts)):
