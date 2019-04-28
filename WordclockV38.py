@@ -1134,6 +1134,15 @@ def pacman():
             pacman = matrix[xPacman][yPacman]
             time.sleep(1)
             showText("level" + (str)(level))
+            clear(strip)
+            for i in range(len(pills)):
+                strip.setPixelColor(pills[i], PILLCOLOR)
+            strip.setPixelColor(pacman, PACMANCOLOR)
+            for i in range(len(powers)):
+                strip.setPixelColor(powers[i], POWERCOLOR)
+            for i in range(len(ghosts)):
+                strip.setPixelColor(ghosts[i].getPosition(), GHOSTCOLOR)
+            strip.show()
             timeCounter = 0
         time.sleep(sleepTime)
 
