@@ -24,6 +24,8 @@ class Ghost:
 
     def movement(self, xPacman, yPacman):
         if random.randint(1,2*self.level) == self.level:
+        #if random.randint(1,1) == 1:
+        #if random.randint(1,1) == 2:
             self.moveRandom()
             return
         deltaX = xPacman - self.x
