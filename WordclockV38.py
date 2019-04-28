@@ -1034,7 +1034,7 @@ def pacman(l, c):
     xPacman = random.randint(0, 9)
     yPacman = random.randint(0, 10)
     ghosts = []
-    for i in range(4):
+    for i in range(1):
         ghosts.append(Ghost(level))
     pills = []
     for i in range(2,112):

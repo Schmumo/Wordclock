@@ -16,9 +16,12 @@ class Ghost:
         return Ghost.matrix[self.x][self.y]
 
     def movement(self, xPacman, yPacman):
+        if random.randint(1,1) == 1:
+            self.moveRandom()
+            return
         deltaX = xPacman - self.x
         deltaY = yPacman - self.y
-        if deltaX < deltaY:
+        if deltaX >= deltaY:
             if xPacman > self.x:
                 self.moveDown()
             else:
@@ -28,6 +31,13 @@ class Ghost:
                 self.moveRight()
             else:
                 self.moveLeft()
+
+    def moveRandom(self):
+        i = random.randint(1,4)
+        if i == 1: self.moveUp()
+        elif i == 2: self.moveDown()
+        elif i == 3: self.moveRight()
+        elif i == 4: self.moveLeft()
 
     def moveUp(self):
         self.x = max(self.x - 1, 0)
