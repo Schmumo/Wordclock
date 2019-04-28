@@ -1036,6 +1036,10 @@ def pacman(l, c):
     ghosts = []
     for i in range(4):
         ghosts.append(Ghost(level))
+    for i in range(len(ghosts)):
+        for j in range(len(ghosts)):
+            if i != j:
+                ghosts[i].otherGhosts.append(ghosts[j])
     pills = []
     for i in range(2,112):
         pills.append(i)

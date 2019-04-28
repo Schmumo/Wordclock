@@ -11,9 +11,16 @@ class Ghost:
         self.level = l
         self.x = random.randint(0, 9)
         self.y = random.randint(0, 10)
+        self.otherGhosts = []
 
     def getPosition(self):
         return Ghost.matrix[self.x][self.y]
+
+    def getOtherPositions(self):
+        otherPositions = []
+        for i in range(len(self.otherGhosts)):
+            otherPositions.append(self.otherGhosts[i].getPosition())
+        return otherPositions
 
     def movement(self, xPacman, yPacman):
         if random.randint(1,2*self.level) == self.level:
@@ -40,13 +47,25 @@ class Ghost:
         elif i == 4: self.moveLeft()
 
     def moveUp(self):
+        if self.x == 0 or Ghost.matrix[self.x - 1][self.y] in self.getOtherPositions():
+            self.moveRandom()
+            return
         self.x = max(self.x - 1, 0)
 
     def moveDown(self):
+        if self.x == 9 or Ghost.matrix[self.x + 1][self.y] in self.getOtherPositions():
+            self.moveRandom()
+            return
         self.x = min(self.x + 1, 9)
 
     def moveRight(self):
+        if self.y == 10 or Ghost.matrix[self.x][self.y + 1] in self.getOtherPositions():
+            self.moveRandom()
+            return
         self.y = min(self.y + 1, 10)
 
     def moveLeft(self):
+        if self.y == 0 or Ghost.matrix[self.x][self.y - 1] in self.getOtherPositions():
+            self.moveRandom()
+            return
         self.y = max(self.y - 1, 0)
