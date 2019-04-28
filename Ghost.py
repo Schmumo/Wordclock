@@ -16,12 +16,12 @@ class Ghost:
         return Ghost.matrix[self.x][self.y]
 
     def movement(self, xPacman, yPacman):
-        if random.randint(1,1) == 1:
+        if random.randint(1,2*self.level) == self.level:
             self.moveRandom()
             return
         deltaX = xPacman - self.x
         deltaY = yPacman - self.y
-        if deltaX >= deltaY:
+        if abs(deltaX) >= abs(deltaY):
             if xPacman > self.x:
                 self.moveDown()
             else:
