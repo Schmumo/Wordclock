@@ -1023,7 +1023,7 @@ def pacman():
     global newPDirection
     GHOSTCOLOR = Color(0,255,0)
     PACMANCOLOR = Color(200,255,0)
-    PILLCOLOR = Color(20,20,0)
+    PILLCOLOR = Color(30,0,0)
     POWERCOLOR = Color(255,0,255)
     timeCounter = 0
     busy = True
@@ -1104,24 +1104,6 @@ def pacman():
         for i in range(len(ghosts)):
             if pacman == ghosts[i].getPosition():
                 finished = True
-
-        #Prüfen, ob Level vorbei und gegebenfalls neu aufbauen
-        if len(pills) == 0:
-            for i in range(len(ghosts)):
-                level = level + 1
-                ghosts[i].newPosition()
-                ghosts[i].level = level
-            pills = []
-            for i in range(2,112):
-                pills.append(i)
-            powers = [2, 12, 101, 111]
-            xPacman = random.randint(0, 9)
-            yPacman = random.randint(0, 10)
-            while matrix[xPacman][yPacman] in ghosts[i].getAllPositions():
-                xPacman = random.randint(0, 9)
-                yPacman = random.randint(0, 10)
-            pacman = matrix[xPacman][yPacman]
-            showText("level" + (str)(level))
         
         #Spielfeld anzeigen und Sleep
         clear(strip)
@@ -1134,7 +1116,25 @@ def pacman():
             strip.setPixelColor(ghosts[i].getPosition(), GHOSTCOLOR)
         strip.show()
         timeCounter = timeCounter + 1
-        #print(timeCounter)
+        #Prüfen, ob Level vorbei und gegebenfalls neu aufbauen
+        if len(pills) == 0:
+            for i in range(len(ghosts)):
+                level = level + 1
+                ghosts[i].newPosition()
+                ghosts[i].level = level
+            pills = []
+            for i in range(2,112):
+                pills.append(i)
+            powers = [2, 12, 101, 111]
+            xPacman = random.randint(0, 9)
+            yPacman = random.randint(0, 10)
+            while matrix[xPacman][yPacman] in ghosts[0].getAllPositions():
+                xPacman = random.randint(0, 9)
+                yPacman = random.randint(0, 10)
+            pacman = matrix[xPacman][yPacman]
+            time.sleep(1)
+            showText("level" + (str)(level))
+            timeCounter = 0
         time.sleep(sleepTime)
 
     #Ende. Tasten deaktivieren, Punktzahl anzeigen.
