@@ -1153,6 +1153,7 @@ def pacman():
             for i in range(len(ghosts)):
                 strip.setPixelColor(ghosts[i].getPosition(), GHOSTCOLOR)
             strip.show()
+            time.sleep(4)
             timeCounter = 0
         time.sleep(sleepTime)
 
@@ -1917,11 +1918,16 @@ def resetConfig():
 def showConfig():
     info_text= """Nachtfarbe: """+str(config.getint('nachtfarbe_section', 'rot'))+""", """+str(config.getint('nachtfarbe_section', 'grün'))+""", """+str(config.getint('nachtfarbe_section', 'blau'))+"""
     \nMorgenzeit: """+str(config.getint('times_section', 'morninghour'))+""":"""+str(config.getint('times_section', 'morningminutes'))+"""
-    \nNachtzeit: """+str(config.getint('times_section', 'nighthour'))+""":"""+str(config.getint('times_section', 'nightminutes'))+"""
-    \nSnake Highscore: """+str(config.getint('sonstiges_section', 'highscore'))+"""
+    \nNachtzeit: """+str(config.getint('times_section', 'nighthour'))+""":"""+str(config.getint('times_section', 'nightminutes'))
+    tkMessageBox.showinfo(message=info_text, title="Aktuelle Einstellungen")
+
+#Zeigt die Highscores der Spiele an
+def showHighscores():
+    info_text= """Snake Highscore: """+str(config.getint('sonstiges_section', 'highscore'))+"""
     \nTetris Highscore: """+str(config.getint('sonstiges_section', 'tetrisscore'))+"""
-    \nSpace Invaders Highscore: """+str(config.getint('sonstiges_section', 'spacescore'))
-    tkMessageBox.showinfo(message=info_text, title="Aktuelle Einstellungen")   
+    \nSpace Invaders Highscore: """+str(config.getint('sonstiges_section', 'spacescore'))+"""
+    \nPacman Highscore: """+str(config.getint('sonstiges_section', 'pacmanscore'))
+    tkMessageBox.showinfo(message=info_text, title="Aktuelle Einstellungen")
 
 #Zeigt das Impressum an
 def about():
@@ -1940,13 +1946,15 @@ def anleitung_farbe():
     tkMessageBox.showinfo(message=info_text, title="Farbe ändern")
 
 def anleitung_spiele():
-    info_text= """Auf der Uhr kannst du auch das gute alte Retro-Spiele zocken :) Klicke dazu einfach die entsprechenden Button, um eine Runde zu starten.\n
+    info_text= """Auf der Uhr kannst du auch viele gute alte Retro-Spiele zocken :) Klicke dazu einfach die entsprechenden Button, um eine Runde zu starten.\n
     \nSnake: Auf der Uhr erscheint deine Schlange: der Kopf ist Orange, der Körper grün. Das Ziel des Spiels ist es, das rote Futter zu fressen. Sobald du eines frisst, wächst deine Schlange und ein weiteres Futter taucht auf. Das Spiel endet, sobald der Kopf der Schlange in ihrem Körper landet, du dich also selbst beißt.
-Steuerung: zu Beginn musst du in das Textfeld klicken (ein "w" taucht dort von alleine auf). Nun steuerst du die Schlange mit den Tasten WASD. Du kannst auch durch die Wände, dann taucht die Schlange am gegenüberliegenden Rand auf.
+Steuerung: Mit den Tasten WASD steuerst du die Schlange. Du kannst auch durch die Wände, dann taucht die Schlange am gegenüberliegenden Rand auf.
     \nTetris: Es ist Tetris, die Regeln kennt man ja. Vervollständige Reihen, um sie aufzulösen und Punkte zu erhalten. Löst du mit einem Teil mehrere Reihen gleichzeitig auf, erhältst du Bonuspunkte.
-Steuerung: mit ASD bewegst du die Blöcke nach rechts, links oder unten (falls es dir zu langsam geht). Mit Q und E drehst du die Blöcke links- bzw rechtsrum (alternativ kannst du auch W benutzen), mit Leertaste wird Tetris pausiert.
+Steuerung: mit WASD bewegst du die Blöcke nach rechts, links oder unten (falls es dir zu langsam geht). Mit Q und E drehst du die Blöcke links- bzw rechtsrum (alternativ kannst du auch W benutzen), mit Leertaste wird Tetris pausiert.
     \nSpace Invaders: Bei Space Invaders steuerst du das kleine grüne Schiff nach rechts und links und schießt die roten Gegner ab, ohne selbst von diesen getroffen zu werden. Erreicht ein Gegner den unteren Rand, ist das Spiel ebenfalls vorbei.
 Steuerung: Mit AD bewegst du dich nach links und rechts, mit Leertaste schießt du (es kann immer nur ein Schuss aktiv sein).
+    \nPacman: Steuer Pacman durch das Spielfeld und friss dabei alle Pillen, ohne von den eistern gefressen zu werden. Die blauen Super-Pillen lassen dich für 5 Sekunden die Geister fressen.
+Steuerung: mit WASD bewegst du Pacman. Mehr gibt's gar nicht zu sagen.
     \n\nNach einer beendeten Spielrunde wird deine Punktzahl angezeigt. Falls du einen neuen Highscore erreicht hast, erscheint ein Pokal.
 WICHTIG: drücke auf der Uhr nichts anderes, bevor Snake beendet ist und wieder die Uhrzeit angezeigt wird."""
     tkMessageBox.showinfo(message=info_text, title="Snake spielen")
@@ -2178,6 +2186,7 @@ datei_menu=Menu(menuleiste, tearoff=0)
 datei_menu.add_command(label="Einstellungen speichern", command=saveConfig)
 datei_menu.add_command(label="Einstellungen zurücksetzen", command=resetConfig)
 datei_menu.add_command(label="Einstellungen anzeigen", command=showConfig)
+datei_menu.add_command(label="Highscores anzeigen", command=showHighscores)
 help_menu=Menu(menuleiste, tearoff=0)
 anleitungen=Menu(help_menu, tearoff=0)
 anleitungen.add_command(label="Farbe ändern", command=anleitung_farbe)
