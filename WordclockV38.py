@@ -21,6 +21,7 @@ import time
 import thread
 from neopixel import *
 from Tkinter import *
+from threading import Timer
 import sys
 import datetime
 import RPi.GPIO as GPIO
@@ -1021,6 +1022,7 @@ def pacman():
     global COLOR
     global COLORCOPY
     global newPDirection
+    global GHOSTCOLOR
     GHOSTCOLOR = Color(0,255,0)
     PACMANCOLOR = Color(200,255,0)
     PILLCOLOR = Color(30,0,0)
@@ -1030,6 +1032,8 @@ def pacman():
     print("Start Pacman.")
     counter = 0
     level = 1
+    global powersActive
+    powersActive = 0
     sleepTime = 0.3
     ghosts = []
     for i in range(4):
@@ -1083,14 +1087,16 @@ def pacman():
             yPacman = min(yPacman + 1, 10)
         pacman = matrix[xPacman][yPacman]
 
-        #Pillen berechnen
+        #Pillen und Powerpillen berechnen
         if pacman in pills:
             pills.remove(pacman)
             counter = counter + 1
 
         if pacman in powers:
             powers.remove(pacman)
-            supermode = True
+            powersActive = powersActive + 1
+            Timer(5, pillOver).start()
+            GHOSTCOLOR = Color(255,255,255)
 
 
         #Geister Bewegung berechnen
@@ -1103,7 +1109,11 @@ def pacman():
         #Kollision mit Geistern prüfen
         for i in range(len(ghosts)):
             if pacman == ghosts[i].getPosition():
-                finished = True
+                if powersActive == 0:
+                    finished = True
+                else:
+                    counter = counter + 5
+                    ghosts[i].newPosition()
         
         #Spielfeld anzeigen und Sleep
         clear(strip)
@@ -1190,6 +1200,14 @@ def pacmanS(event):
 def pacmanD(event):
     global newPDirection
     newPDirection = "d"
+
+#HIlfsfunktion, die aufgerufen wird, wenn eine Powerpille nicht mehr wirkt.
+def pillOver():
+    global GHOSTCOLOR
+    global powersActive
+    powersActive = powersActive - 1
+    if powersActive == 0:
+        GHOSTCOLOR = Color(0,255,0)
 
 ###################################################################
     
