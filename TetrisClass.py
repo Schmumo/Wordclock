@@ -1,46 +1,19 @@
 # -*- coding: utf-8 -*-
 from neopixel import *
+import ConfigParser
 
-###Farben für die Blöcke, GRB###
-
-#Originalfarben, volle Power
-#COLOR_Q = Color(200,255,0) #Gelb
-#COLOR_J = Color(50,0,255) #Blau
-#COLOR_L = Color(50,255,0) #Orange
-#COLOR_Z = Color(0,255,0) #Rot
-#COLOR_S = Color(255,0,0) #Grün
-#COLOR_T = Color(0,75,255) #Lila
-#COLOR_I = Color(255,0,255) #Cyan
-
-#Leicht gedimmte Farben
-COLOR_Q = Color(200,255,0) #Gelb
-COLOR_J = Color(50,0,255) #Blau
-COLOR_L = Color(50,255,0) #Orange
-COLOR_Z = Color(0,200,0) #Rot
-COLOR_S = Color(180,0,0) #Grün
-COLOR_T = Color(0,75,255) #Lila
-COLOR_I = Color(190,0,190) #Cyan
-
-#Rot-Gelb in Abstufungen
-#COLOR_Q = Color(0,255,0)
-#COLOR_J = Color(10,255,0)
-#COLOR_L = Color(20,255,0)
-#COLOR_Z = Color(40,255,0) 
-#COLOR_S = Color(95,255,0) 
-#COLOR_T = Color(130,255,0)
-#COLOR_I = Color(160,255,0)
-
-#Rot, Orange und Gelb
-#COLOR_Q = Color(0,255,0)
-#COLOR_J = Color(0,255,0)
-#COLOR_L = Color(50,255,0)
-#COLOR_Z = Color(50,255,0) 
-#COLOR_S = Color(50,255,0) 
-#COLOR_T = Color(160,255,0)
-#COLOR_I = Color(160,255,0)
+NULL = Color(0,0,0)
 
 class Tetris:
 
+    COLOR_Q = NULL
+    COLOR_J = NULL
+    COLOR_L = NULL
+    COLOR_Z = NULL
+    COLOR_S = NULL
+    COLOR_T = NULL
+    COLOR_I = NULL
+    
     allFields = []
     allColors = []
     removedRows = []
@@ -49,9 +22,26 @@ class Tetris:
           [56,55,54,53,52,51,50,49,48,47,46],[57,58,59,60,61,62,63,64,65,66,67],[78,77,76,75,74,73,72,71,70,69,68],[79,80,81,82,83,84,85,86,87,88,89],
           [100,99,98,97,96,95,94,93,92,91,90],[101,102,103,104,105,106,107,108,109,110,111]]
 
-    
+
     def __init__(self):
         self.platzhalter = 0
+
+    @staticmethod
+    def setupConfig():
+        configTetris = ConfigParser.RawConfigParser()
+        configTetris.read('/home/pi/Schreibtisch/Python/Git/tetris_cfg.cfg')
+        Tetris.COLOR_Q = Tetris.fromStringToColor((str)(configTetris.get('q','qcolor')))
+        Tetris.COLOR_J = Tetris.fromStringToColor((str)(configTetris.get('j','jcolor')))
+        Tetris.COLOR_L = Tetris.fromStringToColor((str)(configTetris.get('l','lcolor')))
+        Tetris.COLOR_Z = Tetris.fromStringToColor((str)(configTetris.get('z','zcolor')))
+        Tetris.COLOR_S = Tetris.fromStringToColor((str)(configTetris.get('s','scolor')))
+        Tetris.COLOR_T = Tetris.fromStringToColor((str)(configTetris.get('t','tcolor')))
+        Tetris.COLOR_I = Tetris.fromStringToColor((str)(configTetris.get('i','icolor')))
+
+    @staticmethod
+    def fromStringToColor(string):
+        colors = string.split(",")
+        return Color((int)(colors[1]), (int)(colors[0]), (int)(colors[2]))
 
     def moveDown(self):
         for i in range (len(self.y)):
@@ -153,7 +143,7 @@ class QBlock(Tetris):
         return True
 
     def getColor(self):
-        return COLOR_Q
+        return Tetris.COLOR_Q
 
 class JBlock(Tetris):  
     def __init__(self):
@@ -241,7 +231,7 @@ class JBlock(Tetris):
         return self.isMovable()
 
     def getColor(self):
-        return COLOR_J
+        return Tetris.COLOR_J
 
 class LBlock(Tetris):  
     def __init__(self):
@@ -329,7 +319,7 @@ class LBlock(Tetris):
         return self.isMovable()
 
     def getColor(self):
-        return COLOR_L
+        return Tetris.COLOR_L
 
     
 class ZBlock(Tetris): 
@@ -365,7 +355,7 @@ class ZBlock(Tetris):
         return self.isMovable()
 
     def getColor(self):
-        return COLOR_Z
+        return Tetris.COLOR_Z
 
 class SBlock(Tetris): 
     def __init__(self):
@@ -400,7 +390,7 @@ class SBlock(Tetris):
         return self.isMovable()
 		
     def getColor(self):
-        return COLOR_S
+        return Tetris.COLOR_S
     
 class TBlock(Tetris):   
     def __init__(self):
@@ -488,7 +478,7 @@ class TBlock(Tetris):
         return self.isMovable()
     
     def getColor(self):
-        return COLOR_T
+        return Tetris.COLOR_T
 
 class IBlock(Tetris):   
     def __init__(self):
@@ -523,6 +513,6 @@ class IBlock(Tetris):
         return self.isMovable()
     
     def getColor(self):
-        return COLOR_I
+        return Tetris.COLOR_I
 
 

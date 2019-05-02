@@ -1230,6 +1230,7 @@ def tetris():
     paused = False
     calcActive = False
     busy = True
+    Tetris.setupConfig()
     master.bind("a", left)
     master.bind("d", right)
     master.bind("s", down)

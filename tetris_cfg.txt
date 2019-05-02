@@ -1,0 +1,41 @@
+[q]
+qcolor=255,200,0
+[j]
+jcolor=0,50,255
+[l]
+lcolor=255,50,0
+[z]
+zcolor=200,0,0
+[s]
+scolor=0,180,0
+[t]
+tcolor=75,0,255
+[i]
+icolor=0,190,190
+
+#Originalfarben, volle Power
+#COLOR_Q = Color(200,255,0) #Gelb
+#COLOR_J = Color(50,0,255) #Blau
+#COLOR_L = Color(50,255,0) #Orange
+#COLOR_Z = Color(0,255,0) #Rot
+#COLOR_S = Color(255,0,0) #Grün
+#COLOR_T = Color(0,75,255) #Lila
+#COLOR_I = Color(255,0,255) #Cyan
+
+#Leicht gedimmte Farben
+#COLOR_Q = Color(200,255,0) #Gelb
+#COLOR_J = Color(50,0,255) #Blau
+#COLOR_L = Color(50,255,0) #Orange
+#COLOR_Z = Color(0,200,0) #Rot
+#COLOR_S = Color(180,0,0) #Grün
+#COLOR_T = Color(0,75,255) #Lila
+#COLOR_I = Color(190,0,190) #Cyan
+
+#Rot-Gelb in Abstufungen
+#COLOR_Q = Color(0,255,0)
+#COLOR_J = Color(10,255,0)
+#COLOR_L = Color(20,255,0)
+#COLOR_Z = Color(40,255,0) 
+#COLOR_S = Color(95,255,0) 
+#COLOR_T = Color(130,255,0)
+#COLOR_I = Color(160,255,0)
