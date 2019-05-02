@@ -12,14 +12,23 @@ from neopixel import *
 #COLOR_T = Color(0,75,255) #Lila
 #COLOR_I = Color(255,0,255) #Cyan
 
+#Leicht gedimmte Farben
+COLOR_Q = Color(200,255,0) #Gelb
+COLOR_J = Color(50,0,255) #Blau
+COLOR_L = Color(50,255,0) #Orange
+COLOR_Z = Color(0,200,0) #Rot
+COLOR_S = Color(180,0,0) #Grün
+COLOR_T = Color(0,75,255) #Lila
+COLOR_I = Color(190,0,190) #Cyan
+
 #Rot-Gelb in Abstufungen
-COLOR_Q = Color(0,255,0)
-COLOR_J = Color(10,255,0)
-COLOR_L = Color(20,255,0)
-COLOR_Z = Color(40,255,0) 
-COLOR_S = Color(95,255,0) 
-COLOR_T = Color(130,255,0)
-COLOR_I = Color(160,255,0)
+#COLOR_Q = Color(0,255,0)
+#COLOR_J = Color(10,255,0)
+#COLOR_L = Color(20,255,0)
+#COLOR_Z = Color(40,255,0) 
+#COLOR_S = Color(95,255,0) 
+#COLOR_T = Color(130,255,0)
+#COLOR_I = Color(160,255,0)
 
 #Rot, Orange und Gelb
 #COLOR_Q = Color(0,255,0)
