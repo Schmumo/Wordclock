@@ -2019,6 +2019,7 @@ def myMain():
     else:
         COLOR = fromStringToColor(startColor)
         COLORCOPY = COLOR
+	proceed(strip)
 
     ###HAUPTSCHLEIFE###
     while(True):
