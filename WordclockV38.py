@@ -1984,6 +1984,10 @@ def anleitung_weiteres():
     \nMit der Checkbox "Schwabe" kannst du aktivieren und deaktivieren, ob die Uhr die Uhrzeit für normale Menschen anzeigt oder für Schwaben."""
     tkMessageBox.showinfo(message=info_text, title="Sonstiges")
 
+#Hilfsmethode, die aus einem cfg-String eine Farbe macht
+def fromStringToColor(string):
+    colors = string.split(",")
+    return Color((int)(colors[1]), (int)(colors[0]), (int)(colors[2]))
 
 
 
@@ -2008,7 +2012,13 @@ def myMain():
     MORNING = Color(0, 255, 0)
     NIGHTCOLOR = Color(config.getint('nachtfarbe_section', 'grün'), config.getint('nachtfarbe_section', 'rot'), config.getint('nachtfarbe_section', 'blau'))
     nightmodeActive=False
-    randomFromPreset()
+
+    startColor = (str)(config.get('startfarbe_section', 'startfarbe'))
+    if startColor == "random":
+        randomFromPreset()
+    else:
+        COLOR = fromStringToColor(startColor)
+        COLORCOPY = COLOR
 
     ###HAUPTSCHLEIFE###
     while(True):
