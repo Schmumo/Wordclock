@@ -789,6 +789,8 @@ def showPacman():
 #Animation, in der die Buchstaben der Uhrzeit einzeln einlaufen
 def circle():
     global busy
+    if busy == True:
+        return
     busy = True
     global COLOR
 
@@ -1914,6 +1916,7 @@ def resetConfig():
 #Zeigt die aktuell in der .cfg-Datei gespeicherten Einstellungen an
 def showConfig():
     info_text= """Nachtfarbe: """+str(config.get('nachtfarbe_section', 'nachtfarbe'))+"""
+    \nStartfarbe: """+str(config.get('startfarbe_section', 'startfarbe'))+"""
     \nMorgenzeit: """+str(config.getint('times_section', 'morninghour'))+""":"""+str(config.getint('times_section', 'morningminutes'))+"""
     \nNachtzeit: """+str(config.getint('times_section', 'nighthour'))+""":"""+str(config.getint('times_section', 'nightminutes'))
     tkMessageBox.showinfo(message=info_text, title="Aktuelle Einstellungen")
@@ -1952,9 +1955,8 @@ Steuerung: mit WASD bewegst du die Blöcke nach rechts, links oder unten (falls 
 Steuerung: Mit AD bewegst du dich nach links und rechts, mit Leertaste schießt du (es kann immer nur ein Schuss aktiv sein).
     \nPacman: Steuer Pacman durch das Spielfeld und friss dabei alle Pillen, ohne von den eistern gefressen zu werden. Die blauen Super-Pillen lassen dich für 5 Sekunden die Geister fressen.
 Steuerung: mit WASD bewegst du Pacman. Mehr gibt's gar nicht zu sagen.
-    \n\nNach einer beendeten Spielrunde wird deine Punktzahl angezeigt. Falls du einen neuen Highscore erreicht hast, erscheint ein Pokal.
-WICHTIG: drücke auf der Uhr nichts anderes, bevor Snake beendet ist und wieder die Uhrzeit angezeigt wird."""
-    tkMessageBox.showinfo(message=info_text, title="Snake spielen")
+    \n\nNach einer beendeten Spielrunde wird deine Punktzahl angezeigt. Falls du einen neuen Highscore erreicht hast, erscheint ein Pokal."""
+    tkMessageBox.showinfo(message=info_text, title="Spieleautomat")
 
 def anleitung_text():
     info_text= """Auf der Uhr kannst du Texte anzeigen lassen. Gib dazu den gewünschten Text in das Feld ein und klicke auf "Text durchlaufen". Mit dem Slider kannst du auswählen, wie schnell der Text läuft; das kann auch während dem Durchlauf geändert werden.
@@ -1964,7 +1966,7 @@ def anleitung_text():
     tkMessageBox.showinfo(message=info_text, title="Text durchlaufen lassen")
 
 def anleitung_config():
-    info_text= """Über das Menü kannst du deine Einstellungen speichern oder auf den Standard zurücksetzen. Das hat zur Folge, dass deine Einstellungen bei einem Neustart oder einer neuen Software-Version beibehalten werden. Gespeichert werden deine Nachtfarbe, die Morgen- und Nachtzeit, die Checkboxen und die Spiele-Highscores.
+    info_text= """Über das Menü kannst du deine Einstellungen speichern oder auf den Standard zurücksetzen. Das hat zur Folge, dass deine Einstellungen bei einem Neustart oder einer neuen Software-Version beibehalten werden. Gespeichert werden deine Nachtfarbe, die Startfarbe, die Morgen- und Nachtzeit, die Checkboxen und die Spiele-Highscores.
     \nDie aktuellen Einstellungen kannst du dort auch ansehen, falls du z.B. die Nachtzeit vergessen hast."""
     tkMessageBox.showinfo(message=info_text, title="Einstellungen speichern und zurücksetzen")
 
