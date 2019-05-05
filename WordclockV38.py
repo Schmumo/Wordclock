@@ -967,7 +967,7 @@ def snake():
     master.unbind("d")
     time.sleep(1)
 
-    if (counter > config.getint('sonstiges_section', 'highscore')):
+    if (counter > config.getint('highscore_section', 'snakescore')):
         trophy = []
         trophy.extend((matrix[1][3], matrix[1][4], matrix[1][5], matrix[1][6], matrix[1][7], matrix[2][2], matrix[2][3], matrix[2][7], matrix[2][8] ))
         trophy.extend((matrix[3][2], matrix[3][3], matrix[3][7], matrix[3][8], matrix[4][2], matrix[4][3], matrix[4][7], matrix[4][8]))
@@ -975,7 +975,7 @@ def snake():
         trophy.extend((matrix[9][3], matrix[9][4], matrix[9][5], matrix[9][6], matrix[9][7], matrix[3][1], matrix[3][9]))
         turnOnLEDs(strip, trophy)
         time.sleep(5)
-        config.set('sonstiges_section', 'highscore', counter)
+        config.set('highscore_section', 'snakescore', counter)
         with open('/home/pi/Schreibtisch/Python/Git/wordclock_cfg.cfg', 'wb') as configfile:
             config.write(configfile)
 
@@ -1164,7 +1164,7 @@ def pacman():
     master.unbind("d")
     time.sleep(1)
 
-    if (counter > config.getint('sonstiges_section', 'pacmanscore')):
+    if (counter > config.getint('highscore_section', 'pacmanscore')):
         trophy = []
         trophy.extend((matrix[1][3], matrix[1][4], matrix[1][5], matrix[1][6], matrix[1][7], matrix[2][2], matrix[2][3], matrix[2][7], matrix[2][8] ))
         trophy.extend((matrix[3][2], matrix[3][3], matrix[3][7], matrix[3][8], matrix[4][2], matrix[4][3], matrix[4][7], matrix[4][8]))
@@ -1172,7 +1172,7 @@ def pacman():
         trophy.extend((matrix[9][3], matrix[9][4], matrix[9][5], matrix[9][6], matrix[9][7], matrix[3][1], matrix[3][9]))
         turnOnLEDs(strip, trophy)
         time.sleep(5)
-        config.set('sonstiges_section', 'pacmanscore', counter)
+        config.set('highscore_section', 'pacmanscore', counter)
         with open('/home/pi/Schreibtisch/Python/Git/wordclock_cfg.cfg', 'wb') as configfile:
             config.write(configfile)
 
@@ -1321,7 +1321,7 @@ def tetris():
     master.unbind("q")
     master.unbind("<space>")
     counter = currentBlock.getScore()
-    if (counter > config.getint('sonstiges_section', 'tetrisscore')):
+    if (counter > config.getint('highscore_section', 'tetrisscore')):
         trophy = []
         trophy.extend((matrix[1][3], matrix[1][4], matrix[1][5], matrix[1][6], matrix[1][7], matrix[2][2], matrix[2][3], matrix[2][7], matrix[2][8] ))
         trophy.extend((matrix[3][2], matrix[3][3], matrix[3][7], matrix[3][8], matrix[4][2], matrix[4][3], matrix[4][7], matrix[4][8]))
@@ -1329,7 +1329,7 @@ def tetris():
         trophy.extend((matrix[9][3], matrix[9][4], matrix[9][5], matrix[9][6], matrix[9][7], matrix[3][1], matrix[3][9]))
         turnOnLEDs(strip, trophy)
         time.sleep(5)
-        config.set('sonstiges_section', 'tetrisscore', counter)
+        config.set('highscore_section', 'tetrisscore', counter)
         with open('/home/pi/Schreibtisch/Python/Git/wordclock_cfg.cfg', 'wb') as configfile:
             config.write(configfile)
     score = str(counter)
@@ -1579,7 +1579,7 @@ def spaceInvaders():
     unbindSpaceKeys()
     
     
-    if (counter > config.getint('sonstiges_section', 'spacescore')):
+    if (counter > config.getint('highscore_section', 'spacescore')):
         trophy = []
         trophy.extend((matrix[1][3], matrix[1][4], matrix[1][5], matrix[1][6], matrix[1][7], matrix[2][2], matrix[2][3], matrix[2][7], matrix[2][8] ))
         trophy.extend((matrix[3][2], matrix[3][3], matrix[3][7], matrix[3][8], matrix[4][2], matrix[4][3], matrix[4][7], matrix[4][8]))
@@ -1587,7 +1587,7 @@ def spaceInvaders():
         trophy.extend((matrix[9][3], matrix[9][4], matrix[9][5], matrix[9][6], matrix[9][7], matrix[3][1], matrix[3][9]))
         turnOnLEDs(strip, trophy)
         time.sleep(5)
-        config.set('sonstiges_section', 'spacescore', counter)
+        config.set('highscore_section', 'spacescore', counter)
         with open('/home/pi/Schreibtisch/Python/Git/wordclock_cfg.cfg', 'wb') as configfile:
             config.write(configfile)
     score = str(counter)
@@ -1885,9 +1885,7 @@ def saveConfig():
     config.set('checkbox_section', 'morgenszufall', varMorning.get())
     config.set('checkbox_section', 'nachtmodus', varNightmode.get())
     config.set('sonstiges_section', 'sliderspeed', slider_delay.get())
-    config.set('nachtfarbe_section', 'grün', (NIGHTCOLOR & BITMASK_GREEN) >> 16)
-    config.set('nachtfarbe_section', 'rot', (NIGHTCOLOR & BITMASK_RED) >> 8)
-    config.set('nachtfarbe_section', 'blau', (NIGHTCOLOR & BITMASK_BLUE))
+    config.set('nachtfarbe_section', 'nachtfarbe', fromColorToString(NIGHTCOLOR))
 
     with open('/home/pi/Schreibtisch/Python/Git/wordclock_cfg.cfg', 'wb') as configfile:
         config.write(configfile)
@@ -1908,27 +1906,25 @@ def resetConfig():
     config.set('checkbox_section', 'morgenszufall', 0)
     config.set('checkbox_section', 'nachtmodus', 1)
     config.set('sonstiges_section', 'sliderspeed', 0.15)
-    config.set('nachtfarbe_section', 'grün', 20)
-    config.set('nachtfarbe_section', 'rot', 50)
-    config.set('nachtfarbe_section', 'blau', 0)
+    config.set('nachtfarbe_section', 'nachtfarbe', '50,20,0')
 
     with open('/home/pi/Schreibtisch/Python/Git/wordclock_cfg.cfg', 'wb') as configfile:
         config.write(configfile)
 
 #Zeigt die aktuell in der .cfg-Datei gespeicherten Einstellungen an
 def showConfig():
-    info_text= """Nachtfarbe: """+str(config.getint('nachtfarbe_section', 'rot'))+""", """+str(config.getint('nachtfarbe_section', 'grün'))+""", """+str(config.getint('nachtfarbe_section', 'blau'))+"""
+    info_text= """Nachtfarbe: """+str(config.get('nachtfarbe_section', 'nachtfarbe'))+"""
     \nMorgenzeit: """+str(config.getint('times_section', 'morninghour'))+""":"""+str(config.getint('times_section', 'morningminutes'))+"""
     \nNachtzeit: """+str(config.getint('times_section', 'nighthour'))+""":"""+str(config.getint('times_section', 'nightminutes'))
     tkMessageBox.showinfo(message=info_text, title="Aktuelle Einstellungen")
 
 #Zeigt die Highscores der Spiele an
 def showHighscores():
-    info_text= """Snake Highscore: """+str(config.getint('sonstiges_section', 'highscore'))+"""
-    \nTetris Highscore: """+str(config.getint('sonstiges_section', 'tetrisscore'))+"""
-    \nSpace Invaders Highscore: """+str(config.getint('sonstiges_section', 'spacescore'))+"""
-    \nPacman Highscore: """+str(config.getint('sonstiges_section', 'pacmanscore'))
-    tkMessageBox.showinfo(message=info_text, title="Aktuelle Einstellungen")
+    info_text= """Snake Highscore: """+str(config.getint('highscore_section', 'snakescore'))+"""
+    \nTetris Highscore: """+str(config.getint('highscore_section', 'tetrisscore'))+"""
+    \nSpace Invaders Highscore: """+str(config.getint('highscore_section', 'spacescore'))+"""
+    \nPacman Highscore: """+str(config.getint('highscore_section', 'pacmanscore'))
+    tkMessageBox.showinfo(message=info_text, title="Aktuelle Highscores")
 
 #Zeigt das Impressum an
 def about():
@@ -1984,10 +1980,16 @@ def anleitung_weiteres():
     \nMit der Checkbox "Schwabe" kannst du aktivieren und deaktivieren, ob die Uhr die Uhrzeit für normale Menschen anzeigt oder für Schwaben."""
     tkMessageBox.showinfo(message=info_text, title="Sonstiges")
 
-#Hilfsmethode, die aus einem cfg-String eine Farbe macht
+#Hilfsmethoden, die aus einem cfg-String eine Farbe macht und umgekehrt
 def fromStringToColor(string):
     colors = string.split(",")
     return Color((int)(colors[1]), (int)(colors[0]), (int)(colors[2]))
+
+def fromColorToString(color):
+    red = (color & BITMASK_RED) >> 8
+    green = (color & BITMASK_GREEN) >> 16
+    blue = (color & BITMASK_BLUE)
+    return (str)(red)+","+(str)(green)+","+(str)(blue)
 
 
 
@@ -2010,7 +2012,7 @@ def myMain():
     nightHour=config.getint('times_section', 'nightHour')
     nightMinutes=config.getint('times_section', 'nightMinutes')
     MORNING = Color(0, 255, 0)
-    NIGHTCOLOR = Color(config.getint('nachtfarbe_section', 'grün'), config.getint('nachtfarbe_section', 'rot'), config.getint('nachtfarbe_section', 'blau'))
+    NIGHTCOLOR = fromStringToColor((str)(config.get('nachtfarbe_section', 'nachtfarbe')))
     nightmodeActive=False
 
     startColor = (str)(config.get('startfarbe_section', 'startfarbe'))
@@ -2060,6 +2062,8 @@ def myMain():
                     arrayLEDs = calculateArrayBinary(year, month, day, hour, minute, second)
                 if (busy == False):
                     turnOnLEDs(strip, arrayLEDs)
+                if minute == 0 and hour == 23:
+                    saveConfig()
             time.sleep(1)
 
         except KeyboardInterrupt:
