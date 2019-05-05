@@ -1128,8 +1128,8 @@ def pacman():
         timeCounter = timeCounter + 1
         #Prüfen, ob Level vorbei und gegebenfalls neu aufbauen
         if len(pills) == 0:
-            for i in range(len(ghosts)):
-                level = level + 1
+            level = level + 1
+            for i in range(len(ghosts)):           
                 ghosts[i].newPosition()
                 ghosts[i].level = level
             pills = []
@@ -2070,6 +2070,8 @@ def myMain():
 master = Tk()
 master.geometry("+90+100")
 master.title("Wordclock")
+iconPath='/home/pi/Schreibtisch/Python/Git/WordclockIcon.png'
+master.tk.call('wm', 'iconphoto', master._w, PhotoImage(file=iconPath))
 GPIO.setmode(GPIO.BCM)
 config = ConfigParser.RawConfigParser()
 config.read('/home/pi/Schreibtisch/Python/Git/wordclock_cfg.cfg')
