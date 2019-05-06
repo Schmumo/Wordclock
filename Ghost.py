@@ -17,6 +17,7 @@ class Ghost:
         self.level = l
         self.identifier = i
         self.prisoned = False
+        self.nowFree = False
         self.x = random.randint(0, 9)
         self.y = random.randint(0, 10)
 
@@ -49,9 +50,10 @@ class Ghost:
 
     def prisonOver(self):
         self.prisoned = False
+        self.nowFree = True
 
     def movement(self, xPacman, yPacman):
-        if self.prisoned == False and self.getPosition() != Ghost.prisons[self.identifier]:
+        if self.prisoned == False and self.nowFree == False:
             if random.randint(1,2*self.level) == self.level:
             #if random.randint(1,1) == 1:
             #if random.randint(1,1) == 2:
@@ -69,7 +71,8 @@ class Ghost:
                     self.moveRight()
                 else:
                     self.moveLeft()
-        elif self.prisoned == False:
+        elif self.prisoned == False and self.nowFree == True:
+            self.nowFree = False
             if self.identifier == 0:
                 self.x = 0
                 self.y = 0
