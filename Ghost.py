@@ -45,7 +45,7 @@ class Ghost:
 
     def getPrisoned(self):
         self.prisoned = True
-        Timer(3, prisonOver).start()
+        Timer(3, self.prisonOver).start()
 
     def prisonOver(self):
         self.prisoned = False
