@@ -1,4 +1,5 @@
 import random
+from threading import Timer
 
 class Ghost:
 
@@ -7,6 +8,7 @@ class Ghost:
           [100,99,98,97,96,95,94,93,92,91,90],[101,102,103,104,105,106,107,108,109,110,111]]
 
     allGhosts = []
+    prisons = [0,1,112,113]
     finishFlag = False
     powerFlag = False
 
@@ -14,6 +16,7 @@ class Ghost:
     def __init__(self, l, i):
         self.level = l
         self.identifier = i
+        self.prisoned = False
         self.x = random.randint(0, 9)
         self.y = random.randint(0, 10)
 
@@ -22,7 +25,10 @@ class Ghost:
         self.y = random.randint(0, 10)
 
     def getPosition(self):
-        return Ghost.matrix[self.x][self.y]
+        if self.prisoned == False:
+            return Ghost.matrix[self.x][self.y]
+        else:
+            return Ghost.prisons[self.identifier]
 
     def getOtherPositions(self):
         otherPositions = []
@@ -37,24 +43,45 @@ class Ghost:
             allPositions.append(Ghost.allGhosts[i].getPosition())
         return allPositions
 
+    def getPrisoned(self):
+        self.prisoned = True
+        Timer(3, prisonOver).start()
+
+    def prisonOver(self):
+        self.prisoned = False
+
     def movement(self, xPacman, yPacman):
-        if random.randint(1,2*self.level) == self.level:
-        #if random.randint(1,1) == 1:
-        #if random.randint(1,1) == 2:
-            self.moveRandom()
-            return
-        deltaX = xPacman - self.x
-        deltaY = yPacman - self.y
-        if abs(deltaX) >= abs(deltaY):
-            if xPacman > self.x and Ghost.powerFlag == False:
-                self.moveDown()
+        if self.prisoned == False and self.getPosition() != Ghost.prisons[self.identifier]:
+            if random.randint(1,2*self.level) == self.level:
+            #if random.randint(1,1) == 1:
+            #if random.randint(1,1) == 2:
+                self.moveRandom()
+                return
+            deltaX = xPacman - self.x
+            deltaY = yPacman - self.y
+            if abs(deltaX) >= abs(deltaY):
+                if xPacman > self.x and Ghost.powerFlag == False:
+                    self.moveDown()
+                else:
+                    self.moveUp()
             else:
-                self.moveUp()
-        else:
-            if yPacman > self.y and Ghost.powerFlag == False:
-                self.moveRight()
-            else:
-                self.moveLeft()
+                if yPacman > self.y and Ghost.powerFlag == False:
+                    self.moveRight()
+                else:
+                    self.moveLeft()
+        elif self.prisoned == False:
+            if self.identifier == 0:
+                self.x = 0
+                self.y = 0
+            elif self.identifier == 1:
+                self.x = 0
+                self.y = 10
+            elif self.identifier == 2:
+                self.x = 9
+                self.y = 10
+            elif self.identifier == 3:
+                self.x = 9
+                self.y = 0
 
     def moveRandom(self):
         i = random.randint(1,4)

@@ -1115,7 +1115,7 @@ def pacman():
                     finished = True
                 else:
                     counter = counter + 5
-                    ghosts[i].newPosition()
+                    ghosts[i].getPrisoned()
         
         #Spielfeld anzeigen und Sleep
         clear(strip)
