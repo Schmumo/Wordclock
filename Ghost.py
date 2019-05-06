@@ -46,12 +46,12 @@ class Ghost:
         deltaX = xPacman - self.x
         deltaY = yPacman - self.y
         if abs(deltaX) >= abs(deltaY):
-            if xPacman > self.x && powerFlag == False:
+            if xPacman > self.x and powerFlag == False:
                 self.moveDown()
             else:
                 self.moveUp()
         else:
-            if yPacman > self.y && powerFlag == False:
+            if yPacman > self.y and powerFlag == False:
                 self.moveRight()
             else:
                 self.moveLeft()
