@@ -1115,6 +1115,7 @@ def pacman():
             if pacman == ghosts[i].getPosition() or (timeCounter == 0 and pacman == oldGhostPositions[i] and matrix[oldX][oldY] == ghosts[i].getPosition()):
                 if powersActive == 0:
                     finished = True
+                    pacman = ghosts[i].getPosition()
                 else:
                     counter = counter + 5
                     ghosts[i].getPrisoned()
