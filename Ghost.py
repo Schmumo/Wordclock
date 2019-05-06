@@ -9,7 +9,6 @@ class Ghost:
 
     allGhosts = []
     prisons = [0,1,112,113]
-    finishFlag = False
     powerFlag = False
 
 
@@ -18,6 +17,7 @@ class Ghost:
         self.identifier = i
         self.prisoned = False
         self.nowFree = False
+        self.hitPacman = False
         self.x = random.randint(0, 9)
         self.y = random.randint(0, 10)
 
@@ -49,11 +49,11 @@ class Ghost:
         Timer(3, self.prisonOver).start()
 
     def prisonOver(self):
-        self.prisoned = False
         self.nowFree = True
-
+        self.prisoned = False
+        
     def movement(self, xPacman, yPacman):
-        if self.prisoned == False and self.nowFree == False:
+        if self.nowFree == False and self.prisoned == False:
             if random.randint(1,2*self.level) == self.level:
             #if random.randint(1,1) == 1:
             #if random.randint(1,1) == 2:

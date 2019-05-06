@@ -1031,14 +1031,14 @@ def pacman():
     PACMANCOLOR = Color(200,255,0)
     PILLCOLOR = Color(30,0,0)
     POWERCOLOR = Color(255,0,255)
-    timeCounter = 0
+    timeCounter = 1
     busy = True
     print("Start Pacman.")
     counter = 0
     level = 1
     global powersActive
     powersActive = 0
-    sleepTime = 0.3
+    sleepTime = 1
     ghosts = []
     for i in range(4):
         ghosts.append(Ghost(level, i))
@@ -1103,14 +1103,16 @@ def pacman():
 
         #Geister Bewegung berechnen
         if timeCounter == 2:
-            #print("setze timecounter zurück")
+            oldGhostPositions = []
             for i in range(len(ghosts)):
+                oldGhostPositions.append(ghosts[i].getPosition())
                 ghosts[i].movement(oldX, oldY)
             timeCounter = 0
         
         #Kollision mit Geistern prüfen
         for i in range(len(ghosts)):
-            if pacman == ghosts[i].getPosition():
+            #Kollision, wenn Pacman und Geist an gleicher Position oder wenn beide ihre Positionen getasucht haben.
+            if pacman == ghosts[i].getPosition() or (timeCounter == 0 and pacman == oldGhostPositions[i] and matrix[oldX][oldY] == ghosts[i].getPosition()):
                 if powersActive == 0:
                     finished = True
                 else:
@@ -1134,6 +1136,8 @@ def pacman():
             #for i in range(len(ghosts)):           
             #    ghosts[i].newPosition()
             #    ghosts[i].level = level
+            GHOSTCOLOR = Color(0,255,0)
+            Ghost.powerFlag = False
             ghosts = []
             Ghost.allGhosts = []
             for i in range(4):
