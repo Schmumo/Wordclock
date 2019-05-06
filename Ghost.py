@@ -9,21 +9,21 @@ class Ghost:
 
     allGhosts = []
     prisons = [0,1,112,113]
+    prisonsX = [0, 0, 9, 9]
+    prisonsY = [0, 10, 10, 0]
     powerFlag = False
 
 
     def __init__(self, l, i):
         self.level = l
         self.identifier = i
-        self.prisoned = False
-        self.nowFree = False
+        self.prisoned = True
+        self.nowFree = True
         self.hitPacman = False
-        self.x = random.randint(0, 9)
-        self.y = random.randint(0, 10)
-
-    def newPosition(self):
-        self.x = random.randint(0, 9)
-        self.y = random.randint(0, 10)
+        #self.x = random.randint(0, 9)
+        #self.y = random.randint(0, 10)
+        self.x = -1
+        self.y = -1
 
     def getPosition(self):
         if self.prisoned == False:
@@ -73,18 +73,8 @@ class Ghost:
                     self.moveLeft()
         elif self.prisoned == False and self.nowFree == True:
             self.nowFree = False
-            if self.identifier == 0:
-                self.x = 0
-                self.y = 0
-            elif self.identifier == 1:
-                self.x = 0
-                self.y = 10
-            elif self.identifier == 2:
-                self.x = 9
-                self.y = 10
-            elif self.identifier == 3:
-                self.x = 9
-                self.y = 0
+            self.x = Ghost.prisonsX[self.identifier]
+            self.y = Ghost.prisonsY[self.identifier]
 
     def moveRandom(self):
         i = random.randint(1,4)

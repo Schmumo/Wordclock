@@ -1061,13 +1061,15 @@ def pacman():
     for i in range(len(ghosts)):
         strip.setPixelColor(ghosts[i].getPosition(), GHOSTCOLOR)
     strip.show()
-    time.sleep(2)
+    for i in range(len(ghosts)):
+        ghosts[i].prisoned = False
     curDir = random.choice(["w", "a", "s", "d"])
     newPDirection = curDir
     master.bind("w", pacmanW)
     master.bind("a", pacmanA)
     master.bind("s", pacmanS)
     master.bind("d", pacmanD)
+    time.sleep(2)
     finished = False
 
     #Hauptschleife
@@ -1165,6 +1167,8 @@ def pacman():
             for i in range(len(ghosts)):
                 strip.setPixelColor(ghosts[i].getPosition(), GHOSTCOLOR)
             strip.show()
+            for i in range(len(ghosts)):
+                ghosts[i].prisoned = False
             time.sleep(4)
             timeCounter = 0
         time.sleep(sleepTime)
