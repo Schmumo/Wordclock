@@ -6,12 +6,16 @@ class Ghost:
           [56,55,54,53,52,51,50,49,48,47,46],[57,58,59,60,61,62,63,64,65,66,67],[78,77,76,75,74,73,72,71,70,69,68],[79,80,81,82,83,84,85,86,87,88,89],
           [100,99,98,97,96,95,94,93,92,91,90],[101,102,103,104,105,106,107,108,109,110,111]]
 
+    allGhosts = []
+    finishFlag = False
+    powerFlag = False
 
-    def __init__(self, l):
+
+    def __init__(self, l, i):
         self.level = l
+        self.identifier = i
         self.x = random.randint(0, 9)
         self.y = random.randint(0, 10)
-        self.otherGhosts = []
 
     def newPosition(self):
         self.x = random.randint(0, 9)
@@ -22,15 +26,15 @@ class Ghost:
 
     def getOtherPositions(self):
         otherPositions = []
-        for i in range(len(self.otherGhosts)):
-            otherPositions.append(self.otherGhosts[i].getPosition())
+        for i in range(len(Ghost.allGhosts)):
+            if Ghost.allGhosts[i].identifier != self.identifier:
+                otherPositions.append(Ghost.allGhosts[i].getPosition())
         return otherPositions
 
     def getAllPositions(self):
         allPositions = []
-        for i in range(len(self.otherGhosts)):
-            allPositions.append(self.otherGhosts[i].getPosition())
-        allPositions.append(self.getPosition())
+        for i in range(len(Ghost.allGhosts)):
+            allPositions.append(Ghost.allGhosts[i].getPosition())
         return allPositions
 
     def movement(self, xPacman, yPacman):
@@ -42,12 +46,12 @@ class Ghost:
         deltaX = xPacman - self.x
         deltaY = yPacman - self.y
         if abs(deltaX) >= abs(deltaY):
-            if xPacman > self.x:
+            if xPacman > self.x && powerFlag == False:
                 self.moveDown()
             else:
                 self.moveUp()
         else:
-            if yPacman > self.y:
+            if yPacman > self.y && powerFlag == False:
                 self.moveRight()
             else:
                 self.moveLeft()

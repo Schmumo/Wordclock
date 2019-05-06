@@ -881,6 +881,8 @@ def matrixLine(strip, line, arrayNumbers):
          j= j+1
     matrixRunning = matrixRunning + 1
 
+###################################################################
+
 #Startet das Snake-Spiel.
 def startSnake():
     global busy
@@ -1039,11 +1041,8 @@ def pacman():
     sleepTime = 0.3
     ghosts = []
     for i in range(4):
-        ghosts.append(Ghost(level))
-    for i in range(len(ghosts)):
-        for j in range(len(ghosts)):
-            if i != j:
-                ghosts[i].otherGhosts.append(ghosts[j])
+        ghosts.append(Ghost(level, i))
+        Ghost.allGhosts.append(ghosts[i])
     xPacman = random.randint(0, 9)
     yPacman = random.randint(0, 10)
     while matrix[xPacman][yPacman] in ghosts[i].getAllPositions():
@@ -1099,6 +1098,7 @@ def pacman():
             powersActive = powersActive + 1
             Timer(5, pillOver).start()
             GHOSTCOLOR = Color(255,255,255)
+            Ghost.powerFlag = True
 
 
         #Geister Bewegung berechnen
@@ -1211,6 +1211,7 @@ def pillOver():
     powersActive = powersActive - 1
     if powersActive == 0:
         GHOSTCOLOR = Color(0,255,0)
+        Ghost.powerFlag = False
 
 ###################################################################
     
@@ -1459,6 +1460,8 @@ def rotateR(event):
     currentBlock.rotateRight()
     turnOnBlock(currentBlock, nextBlock)
     calcActive = False
+
+###################################################################
 
 #Startet Space Invaders
 def startSpaceInvaders():
@@ -1861,6 +1864,8 @@ def unbindSpaceKeys():
     master.unbind("d")
     master.unbind("<space>")
     master.unbind("x")
+
+###################################################################
 
 #Löscht den Inhalt aus sämtlichen Eingabefenstern, da oft während Spielen reingeschrieben wird.
 def deleteEntries():
