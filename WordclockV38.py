@@ -1031,27 +1031,27 @@ def pacman():
     PACMANCOLOR = Color(200,255,0)
     PILLCOLOR = Color(30,0,0)
     POWERCOLOR = Color(255,0,255)
-    timeCounter = 1
+    timeCounter = 2
     busy = True
     print("Start Pacman.")
     counter = 0
     level = 1
     global powersActive
     powersActive = 0
-    sleepTime = 1
+    sleepTime = 0.3
+    powers = [2, 12, 101, 111]
     ghosts = []
     for i in range(4):
         ghosts.append(Ghost(level, i))
         Ghost.allGhosts.append(ghosts[i])
     xPacman = random.randint(0, 9)
     yPacman = random.randint(0, 10)
-    while matrix[xPacman][yPacman] in ghosts[i].getAllPositions():
+    while (matrix[xPacman][yPacman] in ghosts[0].getAllPositions() or matrix[xPacman][yPacman] in powers):
         xPacman = random.randint(0, 9)
         yPacman = random.randint(0, 10)
     pills = []
     for i in range(2,112):
         pills.append(i)
-    powers = [2, 12, 101, 111]
     clear(strip)
     for i in range(len(pills)):
         strip.setPixelColor(pills[i], PILLCOLOR)
@@ -1152,7 +1152,7 @@ def pacman():
             powers = [2, 12, 101, 111]
             xPacman = random.randint(0, 9)
             yPacman = random.randint(0, 10)
-            while matrix[xPacman][yPacman] in ghosts[0].getAllPositions():
+            while (matrix[xPacman][yPacman] in ghosts[0].getAllPositions() or matrix[xPacman][yPacman] in powers):
                 xPacman = random.randint(0, 9)
                 yPacman = random.randint(0, 10)
             pacman = matrix[xPacman][yPacman]
@@ -1170,7 +1170,7 @@ def pacman():
             for i in range(len(ghosts)):
                 ghosts[i].prisoned = False
             time.sleep(4)
-            timeCounter = 0
+            timeCounter = 2
         time.sleep(sleepTime)
 
     #Ende. Tasten deaktivieren, Punktzahl anzeigen.
