@@ -1131,9 +1131,14 @@ def pacman():
         #Prüfen, ob Level vorbei und gegebenfalls neu aufbauen
         if len(pills) == 0:
             level = level + 1
-            for i in range(len(ghosts)):           
-                ghosts[i].newPosition()
-                ghosts[i].level = level
+            #for i in range(len(ghosts)):           
+            #    ghosts[i].newPosition()
+            #    ghosts[i].level = level
+            ghosts = []
+            Ghost.allGhosts = []
+            for i in range(4):
+                ghosts.append(Ghost(level, i))
+                Ghost.allGhosts.append(ghosts[i])
             pills = []
             for i in range(2,112):
                 pills.append(i)
