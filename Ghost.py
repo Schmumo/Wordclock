@@ -26,7 +26,7 @@ class Ghost:
         self.y = -1
 
     def getPosition(self):
-        if self.prisoned == False:
+        if self.prisoned == False and self.nowFree == False:
             return Ghost.matrix[self.x][self.y]
         else:
             return Ghost.prisons[self.identifier]
