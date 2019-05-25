@@ -1069,6 +1069,10 @@ def pacman():
     master.bind("a", pacmanA)
     master.bind("s", pacmanS)
     master.bind("d", pacmanD)
+    master.bind("<Up>", pacmanW)
+    master.bind("<Left>", pacmanA)
+    master.bind("<Down>", pacmanS)
+    master.bind("<Right>", pacmanD)
     time.sleep(2)
     finished = False
 
@@ -1178,6 +1182,10 @@ def pacman():
     master.unbind("a")
     master.unbind("s")
     master.unbind("d")
+    master.unbind("<Up>")
+    master.unbind("<Left>")
+    master.unbind("<Down>")
+    master.unbind("<Right>")
     time.sleep(1)
 
     if (counter > config.getint('highscore_section', 'pacmanscore')):
