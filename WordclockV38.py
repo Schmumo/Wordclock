@@ -1026,7 +1026,14 @@ def pacman():
     global COLOR
     global COLORCOPY
     global newPDirection
+    global pills
+    global PILLCOLOR
+    global pacman
+    global PACMANCOLOR
+    global ghosts
     global GHOSTCOLOR
+    global powers
+    global POWERCOLOR
     lives = pacmanVar.get()
     GHOSTCOLOR = Color(0,255,0)
     PACMANCOLOR = Color(200,255,0)
@@ -1050,18 +1057,11 @@ def pacman():
     while (matrix[xPacman][yPacman] in ghosts[0].getAllPositions() or matrix[xPacman][yPacman] in powers):
         xPacman = random.randint(0, 9)
         yPacman = random.randint(0, 10)
+    pacman = matrix[xPacman][yPacman]
     pills = []
     for i in range(2,112):
         pills.append(i)
-    clear(strip)
-    for i in range(len(pills)):
-        strip.setPixelColor(pills[i], PILLCOLOR)
-    strip.setPixelColor(matrix[xPacman][yPacman], PACMANCOLOR)
-    for i in range(len(powers)):
-        strip.setPixelColor(powers[i], POWERCOLOR)
-    for i in range(len(ghosts)):
-        strip.setPixelColor(ghosts[i].getPosition(), GHOSTCOLOR)
-    strip.show()
+    showPacmanField()
     for i in range(len(ghosts)):
         ghosts[i].prisoned = False
     curDir = random.choice(["w", "a", "s", "d"])
@@ -1125,29 +1125,27 @@ def pacman():
                     #Spiel vorbei
                     if lives == 1:
                         finished = True
-                        #Leben verloren. Geister zurücksetzen.
+                    #Leben verloren. Geister zurücksetzen.
                     else:
                         lives = lives - 1
                         print("leben verloren")
+                        showPacmanField()
+                        time.sleep(2)
                         ghosts = []
                         Ghost.allGhosts = []
                         for i in range(4):
                             ghosts.append(Ghost(level, i))
-                            Ghost.allGhosts.append(ghosts[i])      
+                            Ghost.allGhosts.append(ghosts[i])
+                        #showPacmanField()
+                        for i in range(len(ghosts)):
+                            ghosts[i].prisoned = False
+                        timeCounter = 2
                 else:
                     counter = counter + 5
                     ghosts[i].getPrisoned()
         
-        #Spielfeld anzeigen und Sleep
-        clear(strip)
-        for i in range(len(pills)):
-            strip.setPixelColor(pills[i], PILLCOLOR)
-        strip.setPixelColor(pacman, PACMANCOLOR)
-        for i in range(len(powers)):
-            strip.setPixelColor(powers[i], POWERCOLOR)
-        for i in range(len(ghosts)):
-            strip.setPixelColor(ghosts[i].getPosition(), GHOSTCOLOR)
-        strip.show()
+        #Spielfeld anzeigen und (am Ende) Sleep
+        showPacmanField()
         timeCounter = timeCounter + 1
         #Prüfen, ob Level vorbei und gegebenfalls neu aufbauen
         if len(pills) == 0:
@@ -1171,15 +1169,7 @@ def pacman():
             pacman = matrix[xPacman][yPacman]
             time.sleep(1)
             showText("level" + (str)(level))
-            clear(strip)
-            for i in range(len(pills)):
-                strip.setPixelColor(pills[i], PILLCOLOR)
-            strip.setPixelColor(pacman, PACMANCOLOR)
-            for i in range(len(powers)):
-                strip.setPixelColor(powers[i], POWERCOLOR)
-            for i in range(len(ghosts)):
-                strip.setPixelColor(ghosts[i].getPosition(), GHOSTCOLOR)
-            strip.show()
+            showPacmanField()
             for i in range(len(ghosts)):
                 ghosts[i].prisoned = False
             time.sleep(4)
@@ -1218,7 +1208,29 @@ def pacman():
     busy = False
     proceed(strip)
 
-###Hilfsfunktionen für Pacman: Ändern bei Drücken von WASD die Richtung###
+###Hilfsfunktionen für Pacman###
+
+#Zeigt das Pacman-Spielfeld an
+def showPacmanField():
+    global pills
+    global PILLCOLOR
+    global pacman
+    global PACMANCOLOR
+    global ghosts
+    global GHOSTCOLOR
+    global powers
+    global POWERCOLOR
+    clear(strip)
+    for i in range(len(pills)):
+        strip.setPixelColor(pills[i], PILLCOLOR)
+    strip.setPixelColor(pacman, PACMANCOLOR)
+    for i in range(len(powers)):
+        strip.setPixelColor(powers[i], POWERCOLOR)
+    for i in range(len(ghosts)):
+        strip.setPixelColor(ghosts[i].getPosition(), GHOSTCOLOR)
+    strip.show()
+
+#Funktionen, die bei Drücken von WASD die Richtung ändern
 def pacmanW(event):
     global newPDirection
     newPDirection = "w"
@@ -1235,7 +1247,7 @@ def pacmanD(event):
     global newPDirection
     newPDirection = "d"
 
-#HIlfsfunktion, die aufgerufen wird, wenn eine Powerpille nicht mehr wirkt.
+#Hilfsfunktion, die aufgerufen wird, wenn eine Powerpille nicht mehr wirkt.
 def pillOver():
     global GHOSTCOLOR
     global powersActive
