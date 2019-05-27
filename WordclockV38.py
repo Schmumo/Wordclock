@@ -490,6 +490,7 @@ def stopRainbow(null):
 #auf oder startet den Textdurchlauf.
 def showInput():
     global busy
+    global varCheckBinary
     if busy == True:
         return
     if (input_text.get().startswith("#egg-")):
@@ -509,6 +510,10 @@ def showInput():
         input_text.delete(0,END)
     elif (input_text.get().startswith("#pacman")):
         showPacman()
+        input_text.delete(0,END)
+    elif (input_text.get().startswith("#binary")):
+        if varCheckBinary.get() == 0: varCheckBinary = 1
+        else: varCheckBinary = 0
         input_text.delete(0,END)
     else:
         thread.start_new_thread(showInput2, ())
@@ -2061,7 +2066,6 @@ def myMain():
     morningMinutes=config.getint('times_section', 'morningMinutes')
     nightHour=config.getint('times_section', 'nightHour')
     nightMinutes=config.getint('times_section', 'nightMinutes')
-    MORNING = Color(0, 255, 0)
     NIGHTCOLOR = fromStringToColor((str)(config.get('nachtfarbe_section', 'nachtfarbe')))
     nightmodeActive=False
 
@@ -2072,6 +2076,7 @@ def myMain():
         COLOR = fromStringToColor(startColor)
         COLORCOPY = COLOR
 	proceed(strip)
+    MORNING = COLOR
 
     ###HAUPTSCHLEIFE###
     while(True):
@@ -2178,7 +2183,7 @@ nightcolor_button=Button(master, text="Nachtfarbe setzen", command = setNightcol
 rainbow_button=Button(master, text="Rainbow")
 rainbow_button.bind('<ButtonPress-1>', startRainbow)
 rainbow_button.bind('<ButtonRelease-1>', stopRainbow)
-varCheckBinary = IntVar()
+varCheckBinary = IntVar(value=0)
 check_binary = Checkbutton(variable=varCheckBinary, text="Binäre Uhr")
 dark_button=Button(master, text="Farbe ausschalten", command = dark)
 tetris_button=Button(master, text="Tetris", command = startTetris)
