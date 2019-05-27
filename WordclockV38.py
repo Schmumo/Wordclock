@@ -1027,6 +1027,7 @@ def pacman():
     global COLORCOPY
     global newPDirection
     global GHOSTCOLOR
+    lives = pacmanVar.get()
     GHOSTCOLOR = Color(0,255,0)
     PACMANCOLOR = Color(200,255,0)
     PILLCOLOR = Color(30,0,0)
@@ -1120,8 +1121,19 @@ def pacman():
             #Kollision, wenn Pacman und Geist an gleicher Position oder wenn beide ihre Positionen getasucht haben.
             if pacman == ghosts[i].getPosition() or (timeCounter == 0 and pacman == oldGhostPositions[i] and matrix[oldX][oldY] == ghosts[i].getPosition()):
                 if powersActive == 0:
-                    finished = True
                     pacman = ghosts[i].getPosition()
+                    #Spiel vorbei
+                    if lives == 1:
+                        finished = True
+                        #Leben verloren. Geister zurücksetzen.
+                    else:
+                        lives = lives - 1
+                        print("leben verloren")
+                        ghosts = []
+                        Ghost.allGhosts = []
+                        for i in range(4):
+                            ghosts.append(Ghost(level, i))
+                            Ghost.allGhosts.append(ghosts[i])      
                 else:
                     counter = counter + 5
                     ghosts[i].getPrisoned()
@@ -1140,9 +1152,6 @@ def pacman():
         #Prüfen, ob Level vorbei und gegebenfalls neu aufbauen
         if len(pills) == 0:
             level = level + 1
-            #for i in range(len(ghosts)):           
-            #    ghosts[i].newPosition()
-            #    ghosts[i].level = level
             GHOSTCOLOR = Color(0,255,0)
             Ghost.powerFlag = False
             ghosts = []
@@ -2162,6 +2171,11 @@ dark_button=Button(master, text="Farbe ausschalten", command = dark)
 tetris_button=Button(master, text="Tetris", command = startTetris)
 space_button=Button(master, text="Space Invaders", command = startSpaceInvaders)
 pacman_button=Button(master, text = "PacMan", command = startPacman)
+pacmanVar = IntVar(master)
+pacmanVar.set(1)
+pacman_lives = OptionMenu(master, pacmanVar, *[1,2,3])
+#preset_label = Label(master, text="Presets:")
+
 
 c1=1
 c2=3
@@ -2195,9 +2209,10 @@ time_label2.grid(row=12, column=c1, sticky='w', padx=20)
 time_entry2.grid(row=12, column=c1, sticky='e', padx=20)
 nightcolor_button.grid(row=13, column=c1, pady=(10, 0))
 space_button.grid(row=15, column=c1, pady=(20, 0), padx=(20, 0) ,sticky = 'w')
-pacman_button.grid(row=15, column=c1, pady=(20, 0), padx=(0, 20), sticky = 'e')
+pacman_button.grid(row=16, column=c1, pady=(20, 0), padx=(20, 0))
+pacman_lives.grid(row = 16, column=c1, pady=(20, 0), sticky = 'e')
 #check_binary.grid(row=16, column=c1, pady=(20, 0), sticky = 'w')
-tetris_button.grid(row=16, column=c1, pady=(20, 0), padx=(0, 20), sticky = 'e')
+tetris_button.grid(row=15, column=c1, pady=(20, 0), padx=(0, 20), sticky = 'e')
 snake_button.grid(row=16, column=c1, pady=(20, 0), padx=(20, 0) ,sticky = 'w')
 actualTime.grid(row=18, column=c1, sticky='n')
 
