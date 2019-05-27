@@ -1951,6 +1951,9 @@ def resetConfig():
     global nightHour
     global nightMinutes
     global NIGHTCOLOR
+    question_text= "Möchtest du deine Einstellungen wirklich zurücksetzen?"
+    if tkMessageBox.askokcancel("Einstellungen zurücksetzen", question_text) == False:
+        return
     config.set('times_section', 'morninghour', 7)
     config.set('times_section', 'morningminutes', 0)
     config.set('times_section', 'nighthour', 23)
@@ -1998,17 +2001,30 @@ def anleitung_farbe():
     tkMessageBox.showinfo(message=info_text, title="Farbe ändern")
 
 def anleitung_spiele():
-    info_text= """Auf der Uhr kannst du auch viele gute alte Retro-Spiele zocken :) Klicke dazu einfach die entsprechenden Button, um eine Runde zu starten.\n
-    \nSnake: Auf der Uhr erscheint deine Schlange: der Kopf ist Orange, der Körper grün. Das Ziel des Spiels ist es, das rote Futter zu fressen. Sobald du eines frisst, wächst deine Schlange und ein weiteres Futter taucht auf. Das Spiel endet, sobald der Kopf der Schlange in ihrem Körper landet, du dich also selbst beißt.
-Steuerung: Mit den Tasten WASD steuerst du die Schlange. Du kannst auch durch die Wände, dann taucht die Schlange am gegenüberliegenden Rand auf.
-    \nTetris: Es ist Tetris, die Regeln kennt man ja. Vervollständige Reihen, um sie aufzulösen und Punkte zu erhalten. Löst du mit einem Teil mehrere Reihen gleichzeitig auf, erhältst du Bonuspunkte.
-Steuerung: mit WASD bewegst du die Blöcke nach rechts, links oder unten (falls es dir zu langsam geht). Mit Q und E drehst du die Blöcke links- bzw rechtsrum (alternativ kannst du auch W benutzen), mit Leertaste wird Tetris pausiert.
-    \nSpace Invaders: Bei Space Invaders steuerst du das kleine grüne Schiff nach rechts und links und schießt die roten Gegner ab, ohne selbst von diesen getroffen zu werden. Erreicht ein Gegner den unteren Rand, ist das Spiel ebenfalls vorbei.
-Steuerung: Mit AD bewegst du dich nach links und rechts, mit Leertaste schießt du (es kann immer nur ein Schuss aktiv sein).
-    \nPacman: Steuer Pacman durch das Spielfeld und friss dabei alle Pillen, ohne von den eistern gefressen zu werden. Die blauen Super-Pillen lassen dich für 5 Sekunden die Geister fressen.
-Steuerung: mit WASD bewegst du Pacman. Mehr gibt's gar nicht zu sagen.
-    \n\nNach einer beendeten Spielrunde wird deine Punktzahl angezeigt. Falls du einen neuen Highscore erreicht hast, erscheint ein Pokal."""
+    info_text= """Auf der Uhr kannst du auch viele gute alte Retro-Spiele zocken :) Klicke dazu einfach die entsprechenden Button, um eine Runde zu starten. Genaure Anleitungen zu den einzelnen Spielen findest du im Menü unter "Spielautomat".
+    \nNach einer beendeten Spielrunde wird deine Punktzahl angezeigt. Falls du einen neuen Highscore erreicht hast, erscheint ein Pokal. Die Uhr läuft nach der Runde von alleine ganz normal weiter."""
     tkMessageBox.showinfo(message=info_text, title="Spieleautomat")
+
+def anleitung_snake():
+    info_text= """Snake: Auf der Uhr erscheint deine Schlange: der Kopf ist Orange, der Körper grün. Das Ziel des Spiels ist es, das rote Futter zu fressen. Sobald du eines frisst, wächst deine Schlange und ein weiteres Futter taucht auf. Das Spiel endet, sobald der Kopf der Schlange in ihrem Körper landet, du dich also selbst beißt.
+Steuerung: Mit den Tasten WASD steuerst du die Schlange. Du kannst auch durch die Wände, dann taucht die Schlange am gegenüberliegenden Rand auf."""
+    tkMessageBox.showinfo(message=info_text, title="Snake")
+
+def anleitung_tetris():
+    info_text= """Tetris: Es ist Tetris, die Regeln kennt man ja. Vervollständige Reihen, um sie aufzulösen und Punkte zu erhalten. Löst du mit einem Teil mehrere Reihen gleichzeitig auf, erhältst du Bonuspunkte.
+Steuerung: mit WASD bewegst du die Blöcke nach rechts, links oder unten (falls es dir zu langsam geht). Mit Q und E drehst du die Blöcke links- bzw rechtsrum (alternativ kannst du auch W benutzen), mit Leertaste wird Tetris pausiert."""
+    tkMessageBox.showinfo(message=info_text, title="Tetris")
+
+def anleitung_spaceInvaders():
+    info_text= """Space Invaders: Bei Space Invaders steuerst du das kleine grüne Schiff nach rechts und links und schießt die roten Gegner ab, ohne selbst von diesen getroffen zu werden. Erreicht ein Gegner den unteren Rand, ist das Spiel ebenfalls vorbei.
+Steuerung: Mit AD bewegst du dich nach links und rechts, mit Leertaste schießt du (es kann immer nur ein Schuss aktiv sein)."""
+    tkMessageBox.showinfo(message=info_text, title="Space Invaders")
+
+def anleitung_pacman():
+    info_text= """Pacman: Steuer Pacman durch das Spielfeld und friss dabei alle Pillen, ohne von den eistern gefressen zu werden. Die blauen Super-Pillen lassen dich für 5 Sekunden die Geister fressen.
+Steuerung: mit WASD oder den Pfeiltasten bewegst du Pacman. Mehr gibt's gar nicht zu sagen."""
+    tkMessageBox.showinfo(message=info_text, title="Pacman")
+
 
 def anleitung_text():
     info_text= """Auf der Uhr kannst du Texte anzeigen lassen. Gib dazu den gewünschten Text in das Feld ein und klicke auf "Text durchlaufen". Mit dem Slider kannst du auswählen, wie schnell der Text läuft; das kann auch während dem Durchlauf geändert werden.
@@ -2265,19 +2281,26 @@ datei_menu=Menu(menuleiste, tearoff=0)
 datei_menu.add_command(label="Einstellungen speichern", command=saveConfig)
 datei_menu.add_command(label="Einstellungen zurücksetzen", command=resetConfig)
 datei_menu.add_command(label="Einstellungen anzeigen", command=showConfig)
-datei_menu.add_command(label="Highscores anzeigen", command=showHighscores)
+spiele_menu=Menu(menuleiste, tearoff=0)
+spiele_menu.add_command(label="Highscores anzeigen", command=showHighscores)
+spiele_menu.add_separator()
+spiele_menu.add_command(label="Snake", command=anleitung_snake)
+spiele_menu.add_command(label="Tetris", command=anleitung_tetris)
+spiele_menu.add_command(label="Space Invaders", command=anleitung_spaceInvaders)
+spiele_menu.add_command(label="Pacman", command=anleitung_pacman)
 help_menu=Menu(menuleiste, tearoff=0)
 anleitungen=Menu(help_menu, tearoff=0)
 anleitungen.add_command(label="Farbe ändern", command=anleitung_farbe)
 anleitungen.add_command(label="Text durchlaufen lassen", command=anleitung_text)
 anleitungen.add_command(label="Nacht- und Morgenzeit setzen", command=anleitung_zeiten)
 anleitungen.add_command(label="Einstellungen speichern und zurücksetzen", command=anleitung_config)
-anleitungen.add_command(label="Spielautomat", command=anleitung_spiele)
+anleitungen.add_command(label="Spiele", command=anleitung_spiele)
 anleitungen.add_command(label="Weitere Funktionen", command=anleitung_weiteres)
 help_menu.add_cascade(label="Anleitungen", menu=anleitungen)
 help_menu.add_command(label="About", command=about)
 
 menuleiste.add_cascade(label="Datei",menu=datei_menu)
+menuleiste.add_cascade(label="Spielautomat",menu=spiele_menu)
 menuleiste.add_cascade(label="Hilfe",menu=help_menu)
 
 master.config(menu=menuleiste)
