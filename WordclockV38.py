@@ -490,7 +490,6 @@ def stopRainbow(null):
 #auf oder startet den Textdurchlauf.
 def showInput():
     global busy
-    global varCheckBinary
     if busy == True:
         return
     if (input_text.get().startswith("#egg-")):
@@ -512,8 +511,8 @@ def showInput():
         showPacman()
         input_text.delete(0,END)
     elif (input_text.get().startswith("#binary")):
-        if varCheckBinary.get() == 0: varCheckBinary = 1
-        else: varCheckBinary = 0
+        if varCheckBinary.get() == 0: varCheckBinary.set(1)
+        else: varCheckBinary.set(0)
         input_text.delete(0,END)
     else:
         thread.start_new_thread(showInput2, ())
