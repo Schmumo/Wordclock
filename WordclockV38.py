@@ -2012,7 +2012,7 @@ Steuerung: Mit den Tasten WASD steuerst du die Schlange. Du kannst auch durch di
 
 def anleitung_tetris():
     info_text= """Tetris: Es ist Tetris, die Regeln kennt man ja. Vervollständige Reihen, um sie aufzulösen und Punkte zu erhalten. Löst du mit einem Teil mehrere Reihen gleichzeitig auf, erhältst du Bonuspunkte.
-Steuerung: mit WASD bewegst du die Blöcke nach rechts, links oder unten (falls es dir zu langsam geht). Mit Q und E drehst du die Blöcke links- bzw rechtsrum (alternativ kannst du auch W benutzen), mit Leertaste wird Tetris pausiert."""
+Steuerung: Mit WASD bewegst du die Blöcke nach rechts, links oder unten (falls es dir zu langsam geht). Mit Q und E drehst du die Blöcke links- bzw rechtsrum (alternativ kannst du auch W benutzen), mit Leertaste wird Tetris pausiert."""
     tkMessageBox.showinfo(message=info_text, title="Tetris")
 
 def anleitung_spaceInvaders():
@@ -2021,8 +2021,9 @@ Steuerung: Mit AD bewegst du dich nach links und rechts, mit Leertaste schießt 
     tkMessageBox.showinfo(message=info_text, title="Space Invaders")
 
 def anleitung_pacman():
-    info_text= """Pacman: Steuer Pacman durch das Spielfeld und friss dabei alle Pillen, ohne von den eistern gefressen zu werden. Die blauen Super-Pillen lassen dich für 5 Sekunden die Geister fressen.
-Steuerung: mit WASD oder den Pfeiltasten bewegst du Pacman. Mehr gibt's gar nicht zu sagen."""
+    info_text= """Pacman: Steuer Pacman durch das Spielfeld und friss dabei alle Pillen, ohne von den Geistern gefressen zu werden. Die blauen Super-Pillen lassen dich für 5 Sekunden die Geister fressen.
+Mit dem Button neben dem Pacman-Button kannst du einstellen, wieviele Leben du in einer Runde hast.
+Steuerung: Mit WASD oder den Pfeiltasten bewegst du Pacman. Mehr gibt's gar nicht zu sagen."""
     tkMessageBox.showinfo(message=info_text, title="Pacman")
 
 
