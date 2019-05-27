@@ -2123,6 +2123,7 @@ def myMain():
 #BEGIN MAIN
 master = Tk()
 master.geometry("+90+100")
+master.resizable(False, False)
 master.title("Wordclock")
 iconPath='/home/pi/Schreibtisch/Python/Git/WordclockIcon.png'
 master.tk.call('wm', 'iconphoto', master._w, PhotoImage(file=iconPath))
@@ -2185,7 +2186,7 @@ space_button=Button(master, text="Space Invaders", command = startSpaceInvaders)
 pacman_button=Button(master, text = "PacMan", command = startPacman)
 pacmanVar = IntVar(master)
 pacmanVar.set(1)
-pacman_lives = OptionMenu(master, pacmanVar, *[1,2,3])
+pacman_lives = OptionMenu(master, pacmanVar, *[1,2,3,4,5])
 #preset_label = Label(master, text="Presets:")
 
 
