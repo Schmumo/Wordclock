@@ -1028,7 +1028,7 @@ def pacman():
     global newPDirection
     global pills
     global PILLCOLOR
-    global pacman
+    global pacmanPosition
     global PACMANCOLOR
     global ghosts
     global GHOSTCOLOR
@@ -1057,7 +1057,7 @@ def pacman():
     while (matrix[xPacman][yPacman] in ghosts[0].getAllPositions() or matrix[xPacman][yPacman] in powers):
         xPacman = random.randint(0, 9)
         yPacman = random.randint(0, 10)
-    pacman = matrix[xPacman][yPacman]
+    pacmanPosition = matrix[xPacman][yPacman]
     pills = []
     for i in range(2,112):
         pills.append(i)
@@ -1093,15 +1093,15 @@ def pacman():
             yPacman = max(yPacman - 1, 0)
         elif curDir == "d":
             yPacman = min(yPacman + 1, 10)
-        pacman = matrix[xPacman][yPacman]
+        pacmanPosition = matrix[xPacman][yPacman]
 
         #Pillen und Powerpillen berechnen
-        if pacman in pills:
-            pills.remove(pacman)
+        if pacmanPosition in pills:
+            pills.remove(pacmanPosition)
             counter = counter + 1
 
-        if pacman in powers:
-            powers.remove(pacman)
+        if pacmanPosition in powers:
+            powers.remove(pacmanPosition)
             powersActive = powersActive + 1
             Timer(5, pillOver).start()
             GHOSTCOLOR = Color(255,255,255)
@@ -1119,16 +1119,15 @@ def pacman():
         #Kollision mit Geistern prüfen
         for i in range(len(ghosts)):
             #Kollision, wenn Pacman und Geist an gleicher Position oder wenn beide ihre Positionen getasucht haben.
-            if pacman == ghosts[i].getPosition() or (timeCounter == 0 and pacman == oldGhostPositions[i] and matrix[oldX][oldY] == ghosts[i].getPosition()):
+            if pacmanPosition == ghosts[i].getPosition() or (timeCounter == 0 and pacmanPosition == oldGhostPositions[i] and matrix[oldX][oldY] == ghosts[i].getPosition()):
                 if powersActive == 0:
-                    pacman = ghosts[i].getPosition()
+                    pacmanPosition = ghosts[i].getPosition()
                     #Spiel vorbei
                     if lives == 1:
                         finished = True
                     #Leben verloren. Geister zurücksetzen.
                     else:
                         lives = lives - 1
-                        print("leben verloren")
                         showPacmanField()
                         time.sleep(2)
                         ghosts = []
@@ -1167,7 +1166,7 @@ def pacman():
             while (matrix[xPacman][yPacman] in ghosts[0].getAllPositions() or matrix[xPacman][yPacman] in powers):
                 xPacman = random.randint(0, 9)
                 yPacman = random.randint(0, 10)
-            pacman = matrix[xPacman][yPacman]
+            pacmanPosition = matrix[xPacman][yPacman]
             time.sleep(1)
             showText("level" + (str)(level))
             showPacmanField()
@@ -1215,7 +1214,7 @@ def pacman():
 def showPacmanField():
     global pills
     global PILLCOLOR
-    global pacman
+    global pacmanPosition
     global PACMANCOLOR
     global ghosts
     global GHOSTCOLOR
@@ -1224,7 +1223,7 @@ def showPacmanField():
     clear(strip)
     for i in range(len(pills)):
         strip.setPixelColor(pills[i], PILLCOLOR)
-    strip.setPixelColor(pacman, PACMANCOLOR)
+    strip.setPixelColor(pacmanPosition, PACMANCOLOR)
     for i in range(len(powers)):
         strip.setPixelColor(powers[i], POWERCOLOR)
     for i in range(len(ghosts)):
