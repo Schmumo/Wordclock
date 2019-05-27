@@ -1136,10 +1136,11 @@ def pacman():
                         for i in range(4):
                             ghosts.append(Ghost(level, i))
                             Ghost.allGhosts.append(ghosts[i])
-                        #showPacmanField()
+                        showPacmanField()
+                        time.sleep(2)
                         for i in range(len(ghosts)):
                             ghosts[i].prisoned = False
-                        timeCounter = 2
+                        timeCounter = 1
                 else:
                     counter = counter + 5
                     ghosts[i].getPrisoned()
