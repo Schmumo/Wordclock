@@ -13,6 +13,7 @@
 #V372. Tetris bunt und pausieren mit Leertaste
 #V373. Tetris zeigt nun in den Ecken den nächsten Block an
 #V38. Pacman hinzugefügt
+#V40. Started with photosensor
 
 from tkColorChooser import askcolor
 import tkMessageBox
@@ -30,7 +31,10 @@ import random
 import ConfigParser
 from TetrisClass import *
 from Ghost import *
-#from TetrisClass import QBlock
+from Adafruit_ADS1x15 import ADS1x15
+import signal
+import os
+import math
 
 LED_COUNT = 114
 LED_PIN = 18
@@ -1986,7 +1990,7 @@ def showHighscores():
 
 #Zeigt das Impressum an
 def about():
-    info_text= "**************\nAuthor: Marc Jenne\nVersion: 3.8\n**************"
+    info_text= "**************\nAuthor: Marc Jenne\nVersion: 4.0\n**************"
     tkMessageBox.showinfo(message=info_text, title="About")
 
 #Diese und die folgenden Funktionen zeigen die verschiedenen Hilfefenster an
@@ -2061,6 +2065,29 @@ def fromColorToString(color):
     green = (color & BITMASK_GREEN) >> 16
     blue = (color & BITMASK_BLUE)
     return (str)(red)+","+(str)(green)+","+(str)(blue)
+
+#Methoden für den Photosensor
+def setLightSensor(resistance):
+    global COLOR
+    global COLORORIGIN
+    global COLORCOPY
+    dimmFactor = calculateFactor(resistance)
+    print(dimmfactor)
+    newRed = dimmFactor * ((color & BITMASK_RED) >> 8)
+    newGreen = dimmFactor * ((color & BITMASK_GREEN) >> 16)
+    newBlue = dimmFactor * ((color & BITMASK_BLUE))
+    COLOR = Color(newGreen, newRed, newBlue)
+    COLORCOPY = COLOR
+    
+
+def calculateFactor(resistance):
+    if resistance <= 500:
+        dimmFactor = 1
+    elif analog >= 3000:
+        dimmFactor = 0.1
+    else:
+        dimmFactor = 4.0075025-0.49798402*math.log(analog)
+    return dimmFactor
 
 
 
@@ -2310,6 +2337,16 @@ master.config(menu=menuleiste)
 #Streifen initialisieren
 strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
 strip.begin()
+
+#Photosensor einrichten
+ADS1015 = 0x00
+ADS1115 = 0x01
+gain = 4096
+sps = 64
+adc_channel = 0
+adc = ADS1x15(ic=ADS1115)
+Digital_PIN = 1
+GPIO.setup(Digital_PIN, GPIO.IN, pull_up_down = GPIO.PUD_OFF)
 
 COLOR = Color(0,255,0)
 COLORCOPY = Color(0,255,0)
