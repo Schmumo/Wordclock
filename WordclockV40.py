@@ -2254,7 +2254,8 @@ pacman_button=Button(master, text = "PacMan", command = startPacman)
 pacmanVar = IntVar(master)
 pacmanVar.set(1)
 pacman_lives = OptionMenu(master, pacmanVar, *[1,2,3,4,5])
-#preset_label = Label(master, text="Presets:")
+varPhotosensorActive = IntVar(value=0)
+check_photosensor = Checkbutton(variable=varPhotosensorActive, text="Lichtsensor aktivieren")
 
 
 c1=1
@@ -2315,6 +2316,7 @@ randomTotally_button.grid(row=4, column=c3)
 visual_button.grid(row=5, column=c3)
 dimm_button.grid(row=6, column=c3, sticky='n', pady=(5, 30))
 dark_button.grid(row=6, column=c3, sticky='s')
+check_photosensor.grid(row=8, column=c3)
 check_morning.grid(row=11, column=c3)
 check_random.grid(row=12, column=c3)
 mystery.grid(row=13, column=c3)
