@@ -2189,9 +2189,12 @@ def myMain():
                     COLORCOPY = COLOR
                     COLORORIGIN = COLOR
                 #Falls aktiv (und nicht Nacht): Photosensor misst Helligkeit, neue Farbe berechnen
-                if (varPhotosensorActive.get() == 1 and nightmodeActive == False):
-                    resistance = adc.readADCSingleEnded(adc_channel, gain, sps)
-                    setPhotosensor(resistance)
+                try:
+                    if (varPhotosensorActive.get() == 1 and nightmodeActive == False):
+                        resistance = adc.readADCSingleEnded(adc_channel, gain, sps)
+                        setPhotosensor(resistance)
+                except Exception:
+                    print("Couldn't find photosensor!")
                 #Neues Array berechnen und LEDs anschalten.
                 if varCheckBinary.get() == 0:
                     arrayLEDs = calculateArray(hour, minute)
