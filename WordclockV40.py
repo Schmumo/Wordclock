@@ -2066,6 +2066,10 @@ def anleitung_zeiten():
     \nMit den Checkboxen "Stündlich Zufall" und "Morgens Zufall" kannst du auswählen, ob jede Stunde bzw morgens (zur gewählten Morgenzeit) eine Farbe zufällig aus den Presets gesetzt werden soll. Ist letzteres deaktiviert, geht morgens die Farbe an, die vorm Aktivieren der Nachtfarbe aktiv war."""
     tkMessageBox.showinfo(message=info_text, title="Nacht- und Morgenzeit setzen")
 
+def anleitung_lichtsensor():
+    info_text= """Wenn der Lichtsensor aktiviert ist, passt sich die Helligkeit der Uhr automatisch der Umgebung an."""
+    tkMessageBox.showinfo(message=info_text, title="Lichtsensor")
+
 def anleitung_weiteres():
     info_text= """Mit den anderen Buttons kannst du Animationen oder spezielle Anzeigen starten, probier dich einfach durch. Bei all diesen Animationen geht die Uhr von alleine weiter, entweder wenn die Animation vorbei ist oder wenn eine Minute endet.
     \nMit der Checkbox "Schwabe" kannst du aktivieren und deaktivieren, ob die Uhr die Uhrzeit für normale Menschen anzeigt oder für Schwaben."""
@@ -2089,6 +2093,7 @@ def setPhotosensor(resistance):
     global COLORORIGIN
     global COLORCOPY
     dimmFactor = calculateFactor(resistance)
+
     #print(resistance)
     #print(dimmFactor)
     newRed = (int)(dimmFactor * ((COLORORIGIN & BITMASK_RED) >> 8))
@@ -2097,11 +2102,11 @@ def setPhotosensor(resistance):
     COLOR = Color(newGreen, newRed, newBlue)
     COLORCOPY = COLOR
     
-#Individuell: Berechnet aus dem Widerstand einen Vorfaktor zwischen 0.1 und 1.
+#Individuell: Berechnet aus dem Widerstand einen Vorfaktor zwischen 0.1 (Umgebung sehr dunkel, stark dimmen) und 1 (Umgebung sehr hell, gar nicht dimmen).
 def calculateFactor(resistance):
     if resistance <= 500:
         dimmFactor = 1
-    elif resistance >= 3000:
+    elif resistance >= 2500:
         dimmFactor = 0.1
     else:
         dimmFactor = 4.0075025-0.49798402*math.log(resistance)
@@ -2362,6 +2367,7 @@ anleitungen.add_command(label="Text durchlaufen lassen", command=anleitung_text)
 anleitungen.add_command(label="Nacht- und Morgenzeit setzen", command=anleitung_zeiten)
 anleitungen.add_command(label="Einstellungen speichern und zurücksetzen", command=anleitung_config)
 anleitungen.add_command(label="Spiele", command=anleitung_spiele)
+anleitungen.add_command(label="Lichtsensor", command=anleitung_lichtsensor)
 anleitungen.add_command(label="Weitere Funktionen", command=anleitung_weiteres)
 help_menu.add_cascade(label="Anleitungen", menu=anleitungen)
 help_menu.add_command(label="About", command=about)
