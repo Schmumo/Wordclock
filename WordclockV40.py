@@ -2084,15 +2084,16 @@ def fromColorToString(color):
 
 #Methoden für den Photosensor#
 #Für alle Nutzer gleich: Nimmt den Widerstand entgegen und setzt mit dem berechneten Vorfaktor die neue Farbe.
-def setLightSensor(resistance):
+def setPhotosensor(resistance):
     global COLOR
     global COLORORIGIN
     global COLORCOPY
     dimmFactor = calculateFactor(resistance)
-    print(dimmfactor)
-    newRed = dimmFactor * ((COLORORIGIN & BITMASK_RED) >> 8)
-    newGreen = dimmFactor * ((COLORORIGIN & BITMASK_GREEN) >> 16)
-    newBlue = dimmFactor * ((COLORORIGIN & BITMASK_BLUE))
+    print(resistance)
+    print(dimmFactor)
+    newRed = (int)(dimmFactor * ((COLORORIGIN & BITMASK_RED) >> 8))
+    newGreen = (int)(dimmFactor * ((COLORORIGIN & BITMASK_GREEN) >> 16))
+    newBlue = (int)(dimmFactor * ((COLORORIGIN & BITMASK_BLUE)))
     COLOR = Color(newGreen, newRed, newBlue)
     COLORCOPY = COLOR
     
@@ -2100,10 +2101,10 @@ def setLightSensor(resistance):
 def calculateFactor(resistance):
     if resistance <= 500:
         dimmFactor = 1
-    elif analog >= 3000:
+    elif resistance >= 3000:
         dimmFactor = 0.1
     else:
-        dimmFactor = 4.0075025-0.49798402*math.log(analog)
+        dimmFactor = 4.0075025-0.49798402*math.log(resistance)
     return dimmFactor
 
 
@@ -2143,6 +2144,7 @@ def myMain():
     ###HAUPTSCHLEIFE###
     while(True):
         try:
+            #Jede Sekunde ausführen: Anzeige von Uhrzeit und Farbe aktualisieren
             ti = datetime.datetime.now()
             hour = ti.hour
             minute = ti.minute
@@ -2151,25 +2153,31 @@ def myMain():
             actualTime.config(text=strTime)
             strColor = "Farbe: "+str((COLOR & BITMASK_RED) >> 8) +", "+ str((COLOR & BITMASK_GREEN) >> 16) +", "+ str(COLOR & BITMASK_BLUE)
             actualColor.config(text=strColor)
-            if (second == 0):
+            #Wenn busy, werden keinerlei Berechnungen durchgeführt; alles bis sleep wird übersprungen
+            #Bei voller Minute oder, wenn Photosensor aktiv, jede Sekunde ausführen:
+            if (busy == False and (varPhotosensorActive.get() == 1 or second == 0)):
                 #Im Folgenden einige besondere Stunden, bei denen die Farbe gewechselt wird
                 if varNightmode.get() == 1 and hour == nightHour and minute == nightMinutes:
-                    #HIER NACHTFARBE
                     MORNING = COLOR
                     COLOR = NIGHTCOLOR
                     COLORCOPY = NIGHTCOLOR
                     nightmodeActive=True
                 elif varNightmode.get() == 1 and hour == morningHour and minute == morningMinutes:
-                    #HIER MORGENFARBE
                     COLOR = MORNING
-                    COLORCOPY = MORNING
+                    COLORCOPY = COLOR
+                    COLORORIGIN = COLOR
                     if varMorning.get() == 1:
                         randomFromPreset()
                     nightmodeActive=False
                 elif minute == 0 and varRandom.get() == 1 and nightmodeActive == False:
                     COLOR = COLORS[random.randint(0,len(COLORS)-1)]
                     COLORCOPY = COLOR
-
+                    COLORORIGIN = COLOR
+                #Falls aktiv (und nicht Nacht): Photosensor misst Helligkeit, neue Farbe berechnen
+                if (varPhotosensorActive.get() == 1 and nightmodeActive == False):
+                    resistance = adc.readADCSingleEnded(adc_channel, gain, sps)
+                    setPhotosensor(resistance)
+                #Neues Array berechnen und LEDs anschalten.
                 if varCheckBinary.get() == 0:
                     arrayLEDs = calculateArray(hour, minute)
                 else:
@@ -2177,8 +2185,8 @@ def myMain():
                     month = ti.month
                     day = ti.day
                     arrayLEDs = calculateArrayBinary(year, month, day, hour, minute, second)
-                if (busy == False):
-                    turnOnLEDs(strip, arrayLEDs)
+                turnOnLEDs(strip, arrayLEDs)
+                #Um 23 Uhr werden automatisch die Einstellungen gespeichert.
                 if minute == 0 and hour == 23:
                     saveConfig()
             time.sleep(1)
