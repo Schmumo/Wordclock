@@ -246,9 +246,11 @@ def chooseVisual():
     colors = result[0]
     global COLOR
     global COLORCOPY
+    global COLORORIGIN
     if colors != None:
         COLOR = Color(colors[1], colors[0], colors[2])
         COLORCOPY = Color(colors[1], colors[0], colors[2])
+        COLORORIGIN = COLOR
     proceed(strip)
 
 #Farbe der Slider wird über den Button gesetzt
@@ -258,8 +260,10 @@ def chooseFromSliders():
     blue=slider_blue.get()
     global COLOR
     global COLORCOPY
+    global COLORORIGIN
     COLOR = Color(green, red, blue)
     COLORCOPY = Color(green, red, blue)
+    COLORORIGIN = COLOR
     proceed(strip)
 
 #Farbe der Slider wird gesetzt, während einer der Slider verändert wird
@@ -269,8 +273,10 @@ def chooseFromSliders2(null):
     blue=slider_blue.get()
     global COLOR
     global COLORCOPY
+    global COLORORIGIN
     COLOR = Color(green, red, blue)
     COLORCOPY = Color(green, red, blue)
+    COLORORIGIN = COLOR
     proceed(strip)
 
 #Farbe wird aus Presets gewählt.
@@ -281,25 +287,31 @@ def chooseFromPreset(null):
     global COLORS
     global COLOR
     global COLORCOPY
+    global COLORORIGIN
     COLOR = COLORS[c]
     COLORCOPY = COLORS[c]
+    COLORORIGIN = COLOR
     proceed(strip)
     
 #Farbe wird zufällig aus Presets gesetzt
 def randomFromPreset():
     global COLORS
     global COLOR
-    global COLORCOPY 
+    global COLORCOPY
+    global COLORORIGIN
     COLOR = COLORS[random.randint(0,len(COLORS)-1)]
     COLORCOPY = COLOR
+    COLORORIGIN = COLOR
     proceed(strip)
 
 #Farbe wird komplett zufällig gesetzt
 def randomTotally():
     global COLOR
-    global COLORCOPY 
+    global COLORCOPY
+    global COLORORIGIN
     COLOR = Color(random.randint(0,255), random.randint(0,255), random.randint(0,255))
     COLORCOPY = COLOR
+    COLORORIGIN = COLOR
     proceed(strip)
 
 #Farbe wird über Druckknopf gedimmt. Ruft die eigentliche Dimm-Funktion auf
@@ -337,7 +349,9 @@ def dark():
 def changeRainbow(null):
     print("Change")
     global COLORCOPY
+    global COLORORIGIN
     COLORCOPY = rainbow(strip)
+    COLORORIGIN = COLOR
     print((COLOR & BITMASK_GREEN) >> 16, (COLOR & BITMASK_RED) >> 8, COLOR & BITMASK_BLUE)
     turnOnLEDs(strip, arrayLEDs)
 
@@ -479,12 +493,14 @@ def stopRainbow(null):
     global busy
     global COLORCOPY
     global COLOR
+    global COLORORIGIN
     global running
     print("Stop running")
     running = False
     time.sleep(1)
     print("Proceed")
     COLORCOPY = COLOR
+    COLORORIGIN = COLOR
     busy = False
     proceed(strip)
 
@@ -2066,20 +2082,21 @@ def fromColorToString(color):
     blue = (color & BITMASK_BLUE)
     return (str)(red)+","+(str)(green)+","+(str)(blue)
 
-#Methoden für den Photosensor
+#Methoden für den Photosensor#
+#Für alle Nutzer gleich: Nimmt den Widerstand entgegen und setzt mit dem berechneten Vorfaktor die neue Farbe.
 def setLightSensor(resistance):
     global COLOR
     global COLORORIGIN
     global COLORCOPY
     dimmFactor = calculateFactor(resistance)
     print(dimmfactor)
-    newRed = dimmFactor * ((color & BITMASK_RED) >> 8)
-    newGreen = dimmFactor * ((color & BITMASK_GREEN) >> 16)
-    newBlue = dimmFactor * ((color & BITMASK_BLUE))
+    newRed = dimmFactor * ((COLORORIGIN & BITMASK_RED) >> 8)
+    newGreen = dimmFactor * ((COLORORIGIN & BITMASK_GREEN) >> 16)
+    newBlue = dimmFactor * ((COLORORIGIN & BITMASK_BLUE))
     COLOR = Color(newGreen, newRed, newBlue)
     COLORCOPY = COLOR
     
-
+#Individuell: Berechnet aus dem Widerstand einen Vorfaktor zwischen 0.1 und 1.
 def calculateFactor(resistance):
     if resistance <= 500:
         dimmFactor = 1
@@ -2097,6 +2114,7 @@ def myMain():
     global COLORS
     global COLOR
     global COLORCOPY
+    global COLORORIGIN
     global NIGHTCOLOR
     global morningHour
     global morningMinutes
@@ -2118,6 +2136,7 @@ def myMain():
     else:
         COLOR = fromStringToColor(startColor)
         COLORCOPY = COLOR
+        COLORORIGIN = COLOR
 	proceed(strip)
     MORNING = COLOR
 
