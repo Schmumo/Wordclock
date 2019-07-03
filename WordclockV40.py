@@ -2089,8 +2089,8 @@ def setPhotosensor(resistance):
     global COLORORIGIN
     global COLORCOPY
     dimmFactor = calculateFactor(resistance)
-    print(resistance)
-    print(dimmFactor)
+    #print(resistance)
+    #print(dimmFactor)
     newRed = (int)(dimmFactor * ((COLORORIGIN & BITMASK_RED) >> 8))
     newGreen = (int)(dimmFactor * ((COLORORIGIN & BITMASK_GREEN) >> 16))
     newBlue = (int)(dimmFactor * ((COLORORIGIN & BITMASK_BLUE)))
@@ -2106,6 +2106,16 @@ def calculateFactor(resistance):
     else:
         dimmFactor = 4.0075025-0.49798402*math.log(resistance)
     return dimmFactor
+
+#Wenn der Photosensor deaktiviert wird, wird die die angezeigte Farbe auf ORIGIN gesetzt, also die vom Sensor unveränderte.
+def pressedSensor():
+    global COLOR
+    global COLORCOPY
+    global COLORORIGIN
+    if varPhotosensorActive.get() == 0:
+        COLOR = COLORORIGIN
+        COLORCOPY = COLOR
+        proceed(strip)
 
 
 
@@ -2263,7 +2273,7 @@ pacmanVar = IntVar(master)
 pacmanVar.set(1)
 pacman_lives = OptionMenu(master, pacmanVar, *[1,2,3,4,5])
 varPhotosensorActive = IntVar(value=0)
-check_photosensor = Checkbutton(variable=varPhotosensorActive, text="Lichtsensor aktivieren")
+check_photosensor = Checkbutton(variable=varPhotosensorActive, text="Lichtsensor aktivieren", command = pressedSensor)
 
 
 c1=1
