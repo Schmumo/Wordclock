@@ -2101,15 +2101,22 @@ def setPhotosensor(resistance):
     newBlue = (int)(dimmFactor * ((COLORORIGIN & BITMASK_BLUE)))
     COLOR = Color(newGreen, newRed, newBlue)
     COLORCOPY = COLOR
+    photosensor_label.config(text=(str)(resistance) + "=> " + (str)(dimmFactor))
     
 #Individuell: Berechnet aus dem Widerstand einen Vorfaktor zwischen 0.1 (Umgebung sehr dunkel, stark dimmen) und 1 (Umgebung sehr hell, gar nicht dimmen).
 def calculateFactor(resistance):
-    if resistance <= 500:
+    ###FRAGE: Schwellwerte berechnen oder fix in .cfg?###
+    if resistance <= 450:
         dimmFactor = 1
-    elif resistance >= 2500:
+    elif resistance >= 2650:
         dimmFactor = 0.1
     else:
-        dimmFactor = 4.0075025-0.49798402*math.log(resistance)
+        #dimmFactor = 4.0075025-0.49798402*math.log(resistance)
+        hoehe = config.getint('photosensor_section', 'hoehe')
+        stauchung = config.getint('photosensor_section', 'stauchung')
+        empfindlichkeit = config.getint('photosensor_section', 'empfindlichkeit')
+        verschiebung = config.getint('photosensor_section', 'verschiebung')
+        dimmFactor = hoehe - stauchung * math.log(resistance + verschiebung)
     return dimmFactor
 
 #Wenn der Photosensor deaktiviert wird, wird die die angezeigte Farbe auf ORIGIN gesetzt, also die vom Sensor unveränderte.
@@ -2120,6 +2127,7 @@ def pressedSensor():
     if varPhotosensorActive.get() == 0:
         COLOR = COLORORIGIN
         COLORCOPY = COLOR
+        photosensor_label.config(text="Messung & Faktor: N/A")
         proceed(strip)
 
 
@@ -2282,6 +2290,7 @@ pacmanVar.set(1)
 pacman_lives = OptionMenu(master, pacmanVar, *[1,2,3,4,5])
 varPhotosensorActive = IntVar(value=0)
 check_photosensor = Checkbutton(variable=varPhotosensorActive, text="Lichtsensor aktivieren", command = pressedSensor)
+photosensor_label = Label(master, text="Messung & Faktor: N/A")
 
 
 c1=1
@@ -2343,6 +2352,7 @@ visual_button.grid(row=5, column=c3)
 dimm_button.grid(row=6, column=c3, sticky='n', pady=(5, 30))
 dark_button.grid(row=6, column=c3, sticky='s')
 check_photosensor.grid(row=8, column=c3)
+photosensor_label.grid(row=9, column=c3)
 check_morning.grid(row=11, column=c3)
 check_random.grid(row=12, column=c3)
 mystery.grid(row=13, column=c3)
