@@ -2105,18 +2105,13 @@ def setPhotosensor(resistance):
     
 #Individuell: Berechnet aus dem Widerstand einen Vorfaktor zwischen 0.1 (Umgebung sehr dunkel, stark dimmen) und 1 (Umgebung sehr hell, gar nicht dimmen).
 def calculateFactor(resistance):
-    ###FRAGE: Schwellwerte berechnen oder fix in .cfg?###
-    if resistance <= 450:
-        dimmFactor = 1
-    elif resistance >= 2650:
-        dimmFactor = 0.1
-    else:
-        #dimmFactor = 4.0075025-0.49798402*math.log(resistance)
-        hoehe = config.getint('photosensor_section', 'hoehe')
-        stauchung = config.getint('photosensor_section', 'stauchung')
-        empfindlichkeit = config.getint('photosensor_section', 'empfindlichkeit')
-        verschiebung = config.getint('photosensor_section', 'verschiebung')
-        dimmFactor = hoehe - stauchung * math.log(resistance + verschiebung)
+    #dimmFactor = 4.0075025-0.49798402*math.log(resistance)
+    hoehe = config.getint('photosensor_section', 'hoehe')
+    stauchung = config.getint('photosensor_section', 'stauchung')
+    empfindlichkeit = config.getint('photosensor_section', 'empfindlichkeit')
+    verschiebung = config.getint('photosensor_section', 'verschiebung')
+    dimmFactor = hoehe - stauchung * math.log(resistance + verschiebung)
+    dimmFactor = min(1.0, max(dimmFactor, 0.1))
     return dimmFactor
 
 #Wenn der Photosensor deaktiviert wird, wird die die angezeigte Farbe auf ORIGIN gesetzt, also die vom Sensor unveränderte.
