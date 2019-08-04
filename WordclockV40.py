@@ -2106,10 +2106,10 @@ def setPhotosensor(resistance):
 #Individuell: Berechnet aus dem Widerstand einen Vorfaktor zwischen 0.1 (Umgebung sehr dunkel, stark dimmen) und 1 (Umgebung sehr hell, gar nicht dimmen).
 def calculateFactor(resistance):
     #dimmFactor = 4.0075025-0.49798402*math.log(resistance)
-    hoehe = config.getfloat('photosensor_section', 'hoehe')
-    stauchung = config.getfloat('photosensor_section', 'stauchung')
-    empfindlichkeit = config.getfloat('photosensor_section', 'empfindlichkeit')
-    verschiebung = config.getfloat('photosensor_section', 'verschiebung')
+    #hoehe = config.getfloat('photosensor_section', 'hoehe')
+    #stauchung = config.getfloat('photosensor_section', 'stauchung')
+    #empfindlichkeit = config.getfloat('photosensor_section', 'empfindlichkeit')
+    #verschiebung = config.getfloat('photosensor_section', 'verschiebung')
     dimmFactor = hoehe - stauchung * math.log(resistance + verschiebung)
     dimmFactor = min(1.0, max(dimmFactor, 0.1))
     return dimmFactor
@@ -2404,6 +2404,10 @@ try:
     foundSensor = True
     check_photosensor.grid(row=8, column=c3)
     photosensor_label.grid(row=9, column=c3)
+    hoehe = config.getfloat('photosensor_section', 'hoehe')
+    stauchung = config.getfloat('photosensor_section', 'stauchung')
+    empfindlichkeit = config.getfloat('photosensor_section', 'empfindlichkeit')
+    verschiebung = config.getfloat('photosensor_section', 'verschiebung')
 except:
     print("Photosensor not found")
     foundSensor = False
