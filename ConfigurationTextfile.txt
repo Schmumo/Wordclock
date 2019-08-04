@@ -1,0 +1,33 @@
+[times_section]
+morninghour = 10
+morningminutes = 0
+nighthour = 2
+nightminutes = 0
+
+[checkbox_section]
+schwabe = 0
+stündlichzufall = 0
+morgenszufall = 0
+nachtmodus = 1
+
+[sonstiges_section]
+sliderspeed = 0.03
+
+[nachtfarbe_section]
+nachtfarbe = 50,20,0
+
+[startfarbe_section]
+startfarbe = 255,70,0
+
+[highscore_section]
+snakescore = 0
+tetrisscore = 0
+spacescore = 0
+pacmanscore = 0
+
+[photosensor_section]
+hoehe = 4
+stauchung = 0.495
+empfindlichkeit = 1
+verschiebung = 0
+
