@@ -2101,15 +2101,15 @@ def setPhotosensor(resistance):
     newBlue = (int)(dimmFactor * ((COLORORIGIN & BITMASK_BLUE)))
     COLOR = Color(newGreen, newRed, newBlue)
     COLORCOPY = COLOR
-    photosensor_label.config(text=(str)(resistance) + "=> " + (str)(dimmFactor))
+    photosensor_label.config(text=(str)((int)(resistance)) + " => " + "{0:.2f}".format(dimmFactor))
     
 #Individuell: Berechnet aus dem Widerstand einen Vorfaktor zwischen 0.1 (Umgebung sehr dunkel, stark dimmen) und 1 (Umgebung sehr hell, gar nicht dimmen).
 def calculateFactor(resistance):
     #dimmFactor = 4.0075025-0.49798402*math.log(resistance)
-    hoehe = config.getint('photosensor_section', 'hoehe')
-    stauchung = config.getint('photosensor_section', 'stauchung')
-    empfindlichkeit = config.getint('photosensor_section', 'empfindlichkeit')
-    verschiebung = config.getint('photosensor_section', 'verschiebung')
+    hoehe = config.getfloat('photosensor_section', 'hoehe')
+    stauchung = config.getfloat('photosensor_section', 'stauchung')
+    empfindlichkeit = config.getfloat('photosensor_section', 'empfindlichkeit')
+    verschiebung = config.getfloat('photosensor_section', 'verschiebung')
     dimmFactor = hoehe - stauchung * math.log(resistance + verschiebung)
     dimmFactor = min(1.0, max(dimmFactor, 0.1))
     return dimmFactor
@@ -2192,12 +2192,9 @@ def myMain():
                     COLORCOPY = COLOR
                     COLORORIGIN = COLOR
                 #Falls aktiv (und nicht Nacht): Photosensor misst Helligkeit, neue Farbe berechnen
-                try:
-                    if (varPhotosensorActive.get() == 1 and nightmodeActive == False):
-                        resistance = adc.readADCSingleEnded(adc_channel, gain, sps)
-                        setPhotosensor(resistance)
-                except Exception:
-                    print("Couldn't find photosensor!")
+                if (foundSensor == True and varPhotosensorActive.get() == 1 and nightmodeActive == False):
+                    resistance = adc.readADCSingleEnded(adc_channel, gain, sps)
+                    setPhotosensor(resistance)
                 #Neues Array berechnen und LEDs anschalten.
                 if varCheckBinary.get() == 0:
                     arrayLEDs = calculateArray(hour, minute)
@@ -2346,8 +2343,8 @@ randomTotally_button.grid(row=4, column=c3)
 visual_button.grid(row=5, column=c3)
 dimm_button.grid(row=6, column=c3, sticky='n', pady=(5, 30))
 dark_button.grid(row=6, column=c3, sticky='s')
-check_photosensor.grid(row=8, column=c3)
-photosensor_label.grid(row=9, column=c3)
+#check_photosensor.grid(row=8, column=c3)
+#photosensor_label.grid(row=9, column=c3)
 check_morning.grid(row=11, column=c3)
 check_random.grid(row=12, column=c3)
 mystery.grid(row=13, column=c3)
@@ -2401,6 +2398,17 @@ adc = ADS1x15(ic=ADS1115)
 Digital_PIN = 1
 GPIO.setup(Digital_PIN, GPIO.IN, pull_up_down = GPIO.PUD_OFF)
 
+try:
+    resistance = adc.readADCSingleEnded(adc_channel, gain, sps)
+    print("Photosensor found")
+    foundSensor = True
+    check_photosensor.grid(row=8, column=c3)
+    photosensor_label.grid(row=9, column=c3)
+except:
+    print("Photosensor not found")
+    foundSensor = False
+
+#Sonstige Initialisierungen
 COLOR = Color(0,255,0)
 COLORCOPY = Color(0,255,0)
 d=0
