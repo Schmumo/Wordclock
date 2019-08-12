@@ -510,6 +510,11 @@ def stopRainbow(null):
 #auf oder startet den Textdurchlauf.
 def showInput():
     global busy
+    global hoehe
+    global stauchung
+    global empfindlichkeit
+    global verschiebung
+    
     if busy == True:
         return
     if (input_text.get().startswith("#egg-")):
@@ -530,12 +535,20 @@ def showInput():
     elif (input_text.get().startswith("#pacman")):
         showPacman()
         input_text.delete(0,END)
+    elif (input_text.get().startswith("#ps")):
+        try:
+            tag, command = input_text.get().split("-")
+            configSensor(command)
+        except:
+            print("No valid combination!")
+        input_text.delete(0,END)
     elif (input_text.get().startswith("#binary")):
         if varCheckBinary.get() == 0: varCheckBinary.set(1)
         else: varCheckBinary.set(0)
         input_text.delete(0,END)
     else:
         thread.start_new_thread(showInput2, ())
+
 
 #"Umgebung" der Textanzeige: Ruft die showText-Funktion auf und führt dann die Uhr normal fort
 def showInput2():
@@ -2086,16 +2099,14 @@ def fromColorToString(color):
     blue = (color & BITMASK_BLUE)
     return (str)(red)+","+(str)(green)+","+(str)(blue)
 
-#Methoden für den Photosensor#
+###METHODEN FÜR DEN PHOTOSENSOR###
+
 #Für alle Nutzer gleich: Nimmt den Widerstand entgegen und setzt mit dem berechneten Vorfaktor die neue Farbe.
 def setPhotosensor(resistance):
     global COLOR
     global COLORORIGIN
     global COLORCOPY
     dimmFactor = calculateFactor(resistance)
-
-    #print(resistance)
-    #print(dimmFactor)
     newRed = (int)(dimmFactor * ((COLORORIGIN & BITMASK_RED) >> 8))
     newGreen = (int)(dimmFactor * ((COLORORIGIN & BITMASK_GREEN) >> 16))
     newBlue = (int)(dimmFactor * ((COLORORIGIN & BITMASK_BLUE)))
@@ -2105,11 +2116,12 @@ def setPhotosensor(resistance):
     
 #Individuell: Berechnet aus dem Widerstand einen Vorfaktor zwischen 0.1 (Umgebung sehr dunkel, stark dimmen) und 1 (Umgebung sehr hell, gar nicht dimmen).
 def calculateFactor(resistance):
+    global hoehe
+    global stauchung
+    global empfindlichkeit
+    global verschiebung
+    
     #dimmFactor = 4.0075025-0.49798402*math.log(resistance)
-    #hoehe = config.getfloat('photosensor_section', 'hoehe')
-    #stauchung = config.getfloat('photosensor_section', 'stauchung')
-    #empfindlichkeit = config.getfloat('photosensor_section', 'empfindlichkeit')
-    #verschiebung = config.getfloat('photosensor_section', 'verschiebung')
     dimmFactor = hoehe - stauchung * math.log(resistance + verschiebung)
     dimmFactor = min(1.0, max(dimmFactor, 0.1))
     return dimmFactor
@@ -2124,6 +2136,35 @@ def pressedSensor():
         COLORCOPY = COLOR
         photosensor_label.config(text="Messung & Faktor: N/A")
         proceed(strip)
+
+#Setzt über die Texteingabe den gewünschten Parameter auf einen neuen Wert.
+def configSensor(command):
+    global hoehe
+    global stauchung
+    global empfindlichkeit
+    global verschiebung
+    
+    try:
+        item, value_str = command.split("=")
+        value = (float)(value_str)
+    except:
+        pass
+    if item == "hoehe":
+        config.set('photosensor_section', 'hoehe', value)
+        hoehe = value
+    elif item == "stauchung":
+        config.set('photosensor_section', 'stauchung', value)
+        stauchung = value
+    elif item == "empfindlichkeit":
+        config.set('photosensor_section', 'empfindlichkeit', value)
+        empfindlichkeit = value
+    elif item == "verschiebung":
+        config.set('photosensor_section', 'verschiebung', value)
+        verschiebung = value
+    else:
+        print("No valid item")
+    with open('/home/pi/Schreibtisch/Python/Git/wordclock_cfg.cfg', 'wb') as configfile:
+        config.write(configfile)
 
 
 
@@ -2398,16 +2439,16 @@ adc = ADS1x15(ic=ADS1115)
 Digital_PIN = 1
 GPIO.setup(Digital_PIN, GPIO.IN, pull_up_down = GPIO.PUD_OFF)
 
+hoehe = config.getfloat('photosensor_section', 'hoehe')
+stauchung = config.getfloat('photosensor_section', 'stauchung')
+empfindlichkeit = config.getfloat('photosensor_section', 'empfindlichkeit')
+verschiebung = config.getfloat('photosensor_section', 'verschiebung')
 try:
     resistance = adc.readADCSingleEnded(adc_channel, gain, sps)
     print("Photosensor found")
     foundSensor = True
     check_photosensor.grid(row=8, column=c3)
     photosensor_label.grid(row=9, column=c3)
-    hoehe = config.getfloat('photosensor_section', 'hoehe')
-    stauchung = config.getfloat('photosensor_section', 'stauchung')
-    empfindlichkeit = config.getfloat('photosensor_section', 'empfindlichkeit')
-    verschiebung = config.getfloat('photosensor_section', 'verschiebung')
 except:
     print("Photosensor not found")
     foundSensor = False
