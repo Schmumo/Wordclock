@@ -2217,7 +2217,7 @@ def myMain():
             if (busy == False and (varPhotosensorActive.get() == 1 or second == 0)):
                 #Im Folgenden einige besondere Stunden, bei denen die Farbe gewechselt wird
                 if varNightmode.get() == 1 and hour == nightHour and minute == nightMinutes:
-                    MORNING = COLOR
+                    MORNING = COLORORIGIN
                     COLOR = NIGHTCOLOR
                     COLORCOPY = NIGHTCOLOR
                     nightmodeActive=True
