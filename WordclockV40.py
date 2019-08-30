@@ -748,20 +748,19 @@ def setMorningTime():
     global morningHour
     try:
         mh, mm = time_entry.get().split(':')
-        h = (int)(mh)
-        m = (int)(mm)
+        h = (int)(mh, 0)
+        m = (int)(mm, 0)
         if (h >= 0 and h <= 23 and m >= 0 and m < 60):
             morningHour = h
             morningMinutes = m
-            print("Erfolgreiche Eingabe")
+            #print("Erfolgreiche Eingabe")
             time_entry.delete(0,END)
         else:
-            print("Keine gültige Uhrzeit")
+            #print("Keine gültige Uhrzeit")
             tkMessageBox.showerror("Fehlerhafte Eingabe","Die Eingabe entspricht keiner gültigen Uhrzeit! Bitte Format HH:MM eingeben.")
     except:
         tkMessageBox.showerror("Fehlerhafte Eingabe","Die Eingabe entspricht keiner gültigen Uhrzeit! Bitte Format HH:MM eingeben.")
-        print("Fehlerhafte Eingabe")
-        time_entry.delete(0,END)
+        #print("Fehlerhafte Eingabe")
 
 #Setzt die Nachtzeit auf die vom Nutzer eingegebene Uhrzeit
 def setNightTime():
@@ -769,20 +768,19 @@ def setNightTime():
     global nightHour
     try:
         nh, nm = time_entry2.get().split(':')
-        h = (int)(nh)
-        m = (int)(nm)
+        h = (int)(nh, 0)
+        m = (int)(nm, 0)
         if (h >= 0 and h <= 23 and m >= 0 and m < 60):
             nightHour = h
             nightMinutes = m
-            print("Erfolgreiche Eingabe")
+            #print("Erfolgreiche Eingabe")
             time_entry2.delete(0,END)
         else:
-            print("Keine gültige Uhrzeit")
+            #print("Keine gültige Uhrzeit")
             tkMessageBox.showerror("Fehlerhafte Eingabe","Die Eingabe entspricht keiner gültigen Uhrzeit! Bitte Format HH:MM eingeben.")
     except:
         tkMessageBox.showerror("Fehlerhafte Eingabe","Die Eingabe entspricht keiner gültigen Uhrzeit! Bitte Format HH:MM eingeben.")
-        print("Fehlerhafte Eingabe")
-        time_entry2.delete(0,END)
+        #print("Fehlerhafte Eingabe")
 
 #Setzt die Nachtfarbe auf die aktuell gesetzte Farbe    
 def setNightcolor():
