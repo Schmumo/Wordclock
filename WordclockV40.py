@@ -753,14 +753,11 @@ def setMorningTime():
         if (h >= 0 and h <= 23 and m >= 0 and m < 60):
             morningHour = h
             morningMinutes = m
-            #print("Erfolgreiche Eingabe")
             time_entry.delete(0,END)
         else:
-            #print("Keine gültige Uhrzeit")
             tkMessageBox.showerror("Fehlerhafte Eingabe","Die Eingabe entspricht keiner gültigen Uhrzeit! Bitte Format HH:MM eingeben.")
     except:
         tkMessageBox.showerror("Fehlerhafte Eingabe","Die Eingabe entspricht keiner gültigen Uhrzeit! Bitte Format HH:MM eingeben.")
-        #print("Fehlerhafte Eingabe")
 
 #Setzt die Nachtzeit auf die vom Nutzer eingegebene Uhrzeit
 def setNightTime():
@@ -773,14 +770,11 @@ def setNightTime():
         if (h >= 0 and h <= 23 and m >= 0 and m < 60):
             nightHour = h
             nightMinutes = m
-            #print("Erfolgreiche Eingabe")
             time_entry2.delete(0,END)
         else:
-            #print("Keine gültige Uhrzeit")
             tkMessageBox.showerror("Fehlerhafte Eingabe","Die Eingabe entspricht keiner gültigen Uhrzeit! Bitte Format HH:MM eingeben.")
     except:
         tkMessageBox.showerror("Fehlerhafte Eingabe","Die Eingabe entspricht keiner gültigen Uhrzeit! Bitte Format HH:MM eingeben.")
-        #print("Fehlerhafte Eingabe")
 
 #Setzt die Nachtfarbe auf die aktuell gesetzte Farbe    
 def setNightcolor():
