@@ -279,7 +279,7 @@ def chooseFromSliders2(null):
     COLORORIGIN = COLOR
     proceed(strip)
 
-#Farbe wird aus Presets gewählt.
+#Farbe wird aus Preset gewählt.
 def chooseFromPreset(null):
     var = variable.get()
     split = var.split('-')
@@ -293,7 +293,7 @@ def chooseFromPreset(null):
     COLORORIGIN = COLOR
     proceed(strip)
     
-#Farbe wird zufällig aus Presets gesetzt
+#Farbe wird zufällig aus Preset gesetzt
 def randomFromPreset():
     global COLORS
     global COLOR
@@ -2019,10 +2019,10 @@ def anleitung_farbe():
     info_text= """Die Farbe der Uhr kann über mehrere Möglichkeiten eingestellt werden.
     \nVisuell: klick auf den Button "Visuell wählen". Anschließend öffnet sich ein Pop-Up, in dem du die Farbe auswählen kannst. Bestätige deine Auswahl mit Ok.
     \nSlider: Mithilfe der drei Slider kannst du die Farbe einstellen, indem du den Rot-, Grün- und Blauwert einstellst und dies mit dem Button daneben aktivierst.
-    \nPresets: Die Presets beinhalten eine Liste voreingestellter Farben. Wähle über die Liste eine aus.
-    \nMit dem Button "Random totally" wird eine zufällige Farbe gesetzt. Mit dem Button "Zufall aus Presets" wird eine Farbe aus den Presets gesetzt.
+    \nPreset: Das Preset beinhaltet eine Liste voreingestellter Farben. Wähle über die Liste eine aus.
+    \nMit dem Button "Random totally" wird eine zufällige Farbe gesetzt. Mit dem Button "Zufall aus Preset" wird eine Farbe aus dem Preset gesetzt.
     \nRainbow: Drücke den Button "Rainbow" und halte ihn. Solange er gedrückt bleibt, ändert sich die Farbe der Uhr durchgehend über das gesamt Spektrum. Sobald du den Knopf loslässt, wird die zu diesem Zeitpunkt gezeigte Farbe gesetzt und aktiviert.
-    \nDimmen: Mit diesem Button wird die gewählte Farbe der Uhr in 4 Stufen gedimmt."""
+    \nDimmen: Mit diesem Button wird die gewählte Farbe der Uhr in  Stufen gedimmt."""
     tkMessageBox.showinfo(message=info_text, title="Farbe ändern")
 
 def anleitung_spiele():
@@ -2068,7 +2068,7 @@ def anleitung_zeiten():
     info_text= """Die Uhr verfügt über einen Tag-Nacht-Modus: darüber kannst du einstellen, ob abends/nachts eine andere, z.B. stark gedimmte, Farbe eingestellt werden soll. Dieser Modus kann aber mit der entsprechenden Checkbox auch deaktiviert werden.
     \nDie Nachtzeit gibt an, ab wann die Nachtfarbe aktiviert wird, die Morgenzeit dagegen, wann morgens wieder die ursprüngliche Farbe aktiviert wird. Um diese beiden Zeiten einzustellen, gib in den Textfeldern im Format HH:MM die gewünschte Zeit ein und bestätige sie mit dem Button.
     \nNachtfarbe einstellen: der Button "Nachtfarbe setzen" legt die Nachtfarbe auf die gerade aktive Farbe fest.
-    \nMit den Checkboxen "Stündlich Zufall" und "Morgens Zufall" kannst du auswählen, ob jede Stunde bzw morgens (zur gewählten Morgenzeit) eine Farbe zufällig aus den Presets gesetzt werden soll. Ist letzteres deaktiviert, geht morgens die Farbe an, die vorm Aktivieren der Nachtfarbe aktiv war."""
+    \nMit den Checkboxen "Stündlich Zufall" und "Morgens Zufall" kannst du auswählen, ob jede Stunde bzw morgens (zur gewählten Morgenzeit) eine Farbe zufällig aus dem Preset gesetzt werden soll. Ist letzteres deaktiviert, geht morgens die Farbe an, die vorm Aktivieren der Nachtfarbe aktiv war."""
     tkMessageBox.showinfo(message=info_text, title="Nacht- und Morgenzeit setzen")
 
 def anleitung_lichtsensor():
@@ -2275,7 +2275,7 @@ slider_delay.set(config.getfloat('sonstiges_section', 'sliderspeed'))
 variable = StringVar(master)
 variable.set("0-Rot")
 preset_menu = OptionMenu(master, variable, *preset, command=chooseFromPreset)
-preset_label = Label(master, text="Presets:")
+preset_label = Label(master, text="Preset:")
 slider_red = Scale(master, from_=0, to=255, orient=HORIZONTAL, length=200, troughcolor="red", command=chooseFromSliders2)
 slider_green = Scale(master, from_=0, to=255, orient=HORIZONTAL, length=200, troughcolor="green", command=chooseFromSliders2)
 slider_blue = Scale(master, from_=0, to=255, orient=HORIZONTAL, length=200, troughcolor="blue", command=chooseFromSliders2)
