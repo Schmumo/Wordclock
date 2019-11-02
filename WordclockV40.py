@@ -2231,7 +2231,7 @@ def myMain():
                     COLOR = NIGHTCOLOR
                     COLORCOPY = NIGHTCOLOR
                     nightmodeActive=True
-                elif varNightmode.get() == 1 and hour == morningHour and minute == morningMinutes:
+                elif varNightmode.get() == 1 and hour == morningHour and minute == morningMinutes and second == 0:
                     COLOR = MORNING
                     COLORCOPY = COLOR
                     COLORORIGIN = COLOR
