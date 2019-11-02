@@ -506,6 +506,10 @@ def stopRainbow(null):
 
 ###FUNKTIONEN ZUM ANZEIGEN VON TEXTEN###
 
+#Startet die Texteingabe, wenn der Text mit Enter bestätigt wurde.
+def showInputReturn(null):
+    showInput()
+    
 #Texteingabe: diese Funktion wird aufgerufen, sobald der Button gedrückt wurde. Ruft dann entweder die Easteregg-Funktion
 #auf oder startet den Textdurchlauf.
 def showInput():
@@ -546,6 +550,8 @@ def showInput():
         if varCheckBinary.get() == 0: varCheckBinary.set(1)
         else: varCheckBinary.set(0)
         input_text.delete(0,END)
+    elif (input_text.get() == ""):
+        pass
     else:
         thread.start_new_thread(showInput2, ())
 
@@ -2269,6 +2275,7 @@ exit_button = Button(master, text="Beenden", command = master.quit)
 randomPreset_button = Button(master, text="Zufall aus Preset", command = randomFromPreset)
 randomTotally_button = Button(master, text="Random totally", command = randomTotally)
 input_text=Entry(master)
+input_text.bind('<Return>', showInputReturn)
 text_button = Button(master, text="Text duchlaufen", command = showInput)
 slider_delay = Scale(master, from_=0.01, to=0.5, orient=HORIZONTAL, length=200, resolution=0.01)
 slider_delay.set(config.getfloat('sonstiges_section', 'sliderspeed'))
