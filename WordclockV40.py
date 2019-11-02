@@ -748,10 +748,16 @@ def showAllColor(strip, colo):
 
 ###FUNKTIONEN ZUM SETZEN DER ZEITEN UND SPRACHE###
 
+#Startet die Morgenzeit-Funktion, wenn die Zeiteingabe mit Enter bestätigt wurde.
+def setMorningTimeReturn(null):
+    setMorningTime()
+
 #Setzt die Morgenzeit auf die vom Nutzer eingegebene Uhrzeit
 def setMorningTime():
     global morningMinutes
     global morningHour
+    if (time_entry.get() == ""):
+        return
     try:
         mh, mm = time_entry.get().split(':')
         h = (int)(mh, 0)
@@ -765,10 +771,16 @@ def setMorningTime():
     except:
         tkMessageBox.showerror("Fehlerhafte Eingabe","Die Eingabe entspricht keiner gültigen Uhrzeit! Bitte Format HH:MM eingeben.")
 
+#Startet die Nachtzeit-Funktion, wenn die Zeiteingabe mit Enter bestätigt wurde.
+def setNightTimeReturn(null):
+    setNightTime()
+
 #Setzt die Nachtzeit auf die vom Nutzer eingegebene Uhrzeit
 def setNightTime():
     global nightMinutes
     global nightHour
+    if (time_entry2.get() == ""):
+        return
     try:
         nh, nm = time_entry2.get().split(':')
         h = (int)(nh, 0)
@@ -2302,9 +2314,11 @@ check_morning = Checkbutton(variable=varMorning, text="Morgens Zufall", fg="red"
 varNightmode = IntVar(value=config.getint('checkbox_section', 'nachtmodus'))
 check_nightmode = Checkbutton(variable=varNightmode, text="Nachtmodus einschalten", fg="red")
 time_entry=Entry(master, width=12)
+time_entry.bind('<Return>', setMorningTimeReturn)
 time_label=Label(master, text="Morgenbeginn:")
 time_button=Button(master, text="Zeit setzen", command = setMorningTime)
 time_entry2=Entry(master, width=12)
+time_entry2.bind('<Return>', setNightTimeReturn)
 time_label2=Label(master, text="Nachtbeginn:")
 time_button2=Button(master, text="Zeit setzen", command = setNightTime)
 nightcolor_button=Button(master, text="Nachtfarbe setzen", command = setNightcolor)
