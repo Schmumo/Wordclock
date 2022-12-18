@@ -1981,6 +1981,7 @@ def saveConfig():
     config.set('checkbox_section', 'stündlichzufall', varRandom.get())
     config.set('checkbox_section', 'morgenszufall', varMorning.get())
     config.set('checkbox_section', 'nachtmodus', varNightmode.get())
+    config.set('checkbox_section', 'lichtsensor', varPhotosensorActive.get())
     config.set('sonstiges_section', 'sliderspeed', slider_delay.get())
     config.set('nachtfarbe_section', 'nachtfarbe', fromColorToString(NIGHTCOLOR))
 
@@ -2005,6 +2006,7 @@ def resetConfig():
     config.set('checkbox_section', 'stündlichzufall', 0)
     config.set('checkbox_section', 'morgenszufall', 0)
     config.set('checkbox_section', 'nachtmodus', 1)
+    config.set('checkbox_section', 'lichtsensor', 0)
     config.set('sonstiges_section', 'sliderspeed', 0.15)
     config.set('nachtfarbe_section', 'nachtfarbe', '50,20,0')
 
@@ -2335,7 +2337,7 @@ pacmanVar = IntVar(master)
 pacmanVar.set(1)
 pacman_lives = OptionMenu(master, pacmanVar, *[1,2,3,4,5])
 pacman_lives.config(indicatoron=0, bg="#c0c0c0")
-varPhotosensorActive = IntVar(value=0)
+varPhotosensorActive = IntVar(value=config.getint('checkbox_section', 'lichtsensor'))
 check_photosensor = Checkbutton(variable=varPhotosensorActive, text="Lichtsensor aktivieren", command = pressedSensor)
 photosensor_label = Label(master, text="Messung & Faktor: N/A")
 
